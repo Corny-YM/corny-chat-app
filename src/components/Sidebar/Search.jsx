@@ -6,11 +6,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { SearchSideBarContext } from '../../context/SearchSideBarProvider';
+import { AppContext } from '../../context/AppProvider';
 
 const Search = () => {
   const inputRef = useRef();
-  const { isSearching, setIsSearching } = useContext(SearchSideBarContext);
+  const { isSearching, setIsSearching } = useContext(AppContext);
 
   const handleClick = () => {
     setIsSearching(true);

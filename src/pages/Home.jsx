@@ -2,7 +2,6 @@ import React from 'react';
 
 import Sidebar from '../components/Sidebar';
 import Content from '../components/Content';
-import SearchSideBarProvider from '../context/SearchSideBarProvider';
 
 const Home = () => {
   // sidebar
@@ -11,11 +10,9 @@ const Home = () => {
   return (
     <div
       className="w-screen h-screen bg-dark text-slate-100
-      md:flex-center p-4 gap-6 duration-200"
+      sm:flex-center p-4 gap-2 duration-200"
     >
-      <SearchSideBarProvider>
-        <Sidebar />
-      </SearchSideBarProvider>
+      <Sidebar />
       <Content />
     </div>
   );

@@ -38,9 +38,38 @@
     @apply text-white;
     @apply placeholder:text-white;
   }
+  .input-styled-chat {
+    @apply sm:text-[18px];
+    @apply text-[16px];
+    @apply w-full p-3 focus:outline-none border-b-[1px];
+    @apply bg-home-search text-gray-300 border-b-dark;
+    @apply placeholder:text-placeholder-chat;
+  }
 
   .button-styled {
     @apply border-none font-bold cursor-pointer p-[10px];
     @apply bg-text text-main-color;
   }
+
+  .text-ellipsis {
+    @apply whitespace-nowrap overflow-hidden overflow-ellipsis;
+  }
+}
+
+.transition-smooth {
+  transition: all 0.2s linear;
+}
+
+.message-img {
+  width: fit-content;
+  cursor: pointer;
+  border-radius: 0.75rem;
+}
+
+.overflow-overlay {
+  overflow: overlay;
+}
+
+.owner {
+  flex-direction: row-reverse;
 }

@@ -16,7 +16,7 @@ const ChatList = () => {
   };
 
   return (
-    <div className="h-auto flex flex-col flex-1 mt-3 overflow-y-scroll">
+    <div className="flex flex-col flex-1 mt-3 overflow-y-scroll">
       {/* item */}
       <div
         onClick={handleClick}

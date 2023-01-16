@@ -1,16 +1,24 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 
 import Chat from './Chat';
 import InfoChat from './InfoChat';
+import { AppContext } from '../../context/AppProvider';
+import InfoChatProvider from '../../context/InfoChatProvider';
 
 const Content = () => {
+  console.log('re-render');
+  const { showConversation } = useContext(AppContext);
+
   return (
     <div
-      className="hidden sm:flex flex-1 h-full inset-0 p-3 md:p-0
-      "
+      className={`${
+        !showConversation && 'hidden'
+      } fixed inset-0 p-3 sm:relative sm:flex flex-1 h-full md:p-0 bg-dark`}
     >
-      <Chat />
-      <InfoChat />
+      <InfoChatProvider>
+        <Chat />
+        <InfoChat />
+      </InfoChatProvider>
     </div>
   );
 };

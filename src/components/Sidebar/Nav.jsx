@@ -46,7 +46,9 @@ const Nav = () => {
 
   return (
     <header className="flex-center justify-between my-2">
-      <span className="font-bold text-2xl">CornyChat</span>
+      <span className="font-rubikWet font-bold text-xl sm:text-2xl md:text-3xl text-main-color select-none">
+        CornyChat
+      </span>
       <Tippy
         interactive
         visible={visible}

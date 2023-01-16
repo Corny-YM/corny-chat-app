@@ -4,9 +4,6 @@ import Sidebar from '../components/Sidebar';
 import Content from '../components/Content';
 
 const Home = () => {
-  // sidebar
-  // content
-
   return (
     <div
       className="w-screen h-screen bg-dark text-slate-100

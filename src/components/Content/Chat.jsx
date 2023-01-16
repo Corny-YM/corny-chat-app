@@ -6,10 +6,8 @@ import UserInfoChat from './UserInfoChat';
 import InputChatProvider from '../../context/InputChatProvider';
 
 const Chat = () => {
-  console.log('re-render');
-
   return (
-    <div className="flex flex-col flex-1">
+    <div className="h-full flex flex-col flex-1">
       {/* Chat User Info */}
       <UserInfoChat />
 

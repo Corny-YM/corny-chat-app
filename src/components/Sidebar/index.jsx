@@ -9,9 +9,12 @@ import { AppContext } from '../../context/AppProvider';
 
 const Sidebar = () => {
   const { isSearching } = useContext(AppContext);
+  const { showConversation } = useContext(AppContext);
 
   return (
-    <div className={`relative md:max-w-[340px] flex h-full flex-col flex-1`}>
+    <div
+      className={`relative md:max-w-[340px] flex sm:flex h-full flex-col flex-1 `}
+    >
       {/* Header */}
       <Nav />
 

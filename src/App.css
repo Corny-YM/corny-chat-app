@@ -73,3 +73,27 @@
 .owner {
   flex-direction: row-reverse;
 }
+
+.img-shared,
+.video-shared {
+  height: 5.5rem;
+  cursor: pointer;
+  border-radius: 0.75rem;
+  object-fit: cover;
+}
+.file-shared {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  cursor: pointer;
+  gap: 0.25rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  -webkit-text-decoration-line: underline;
+  text-decoration-line: underline;
+}
+
+.ReactCollapse--collapse {
+  transition: all 0.1s linear;
+}

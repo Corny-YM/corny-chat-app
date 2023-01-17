@@ -6,7 +6,6 @@ import { AppContext } from '../../context/AppProvider';
 import InfoChatProvider from '../../context/InfoChatProvider';
 
 const Content = () => {
-  console.log('re-render');
   const { showConversation } = useContext(AppContext);
 
   return (

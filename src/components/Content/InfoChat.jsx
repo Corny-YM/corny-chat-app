@@ -22,7 +22,7 @@ const InfoChat = () => {
     <div
       className={`${
         !showChatDetails && 'hidden'
-      } flex-col fixed inset-0 md:absolute lg:relative lg:w-1/3 bg-dark p-2 overflow-overlay`}
+      } flex-col fixed inset-0 md:absolute lg:relative lg:w-1/3 bg-dark p-2 flex`}
     >
       {/* header */}
       <div className="flex justify-between">
@@ -37,17 +37,19 @@ const InfoChat = () => {
         </div>
       </div>
 
-      {/* Chat Options */}
-      <ChatOptions />
+      <div className="flex-1 overflow-overlay">
+        {/* Chat Options */}
+        <ChatOptions />
 
-      {/* Shared Photos */}
-      <SharedPhotos />
+        {/* Shared Photos */}
+        <SharedPhotos />
 
-      {/* Shared Videos */}
-      <SharedVideos />
+        {/* Shared Videos */}
+        <SharedVideos />
 
-      {/* Shared Files */}
-      <SharedFiles />
+        {/* Shared Files */}
+        <SharedFiles />
+      </div>
     </div>
   );
 };

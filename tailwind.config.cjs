@@ -23,6 +23,8 @@ module.exports = {
         'home-search': '#3a3b3c',
         'placeholder-chat': '#e4e6eb',
         'tippy-hover': '#a2a2a2',
+        modals: '#000000bf',
+        'modals-close-btn': '#171616',
       },
     },
   },

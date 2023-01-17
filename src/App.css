@@ -54,6 +54,10 @@
   .text-ellipsis {
     @apply whitespace-nowrap overflow-hidden overflow-ellipsis;
   }
+
+  .modal-close-btn {
+    @apply absolute top-2 right-2 flex-center w-10 h-10 rounded-full bg-main-color cursor-pointer hover:bg-main-color-darker transition-all;
+  }
 }
 
 .transition-smooth {

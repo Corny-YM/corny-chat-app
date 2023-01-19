@@ -1,7 +1,13 @@
-export const GifIcon = ({ width = '2rem', height = '2rem', className }) => {
+export const GifIcon = ({
+  width = '2rem',
+  height = '2rem',
+  className,
+  style,
+}) => {
   return (
     <svg
       className={className}
+      style={style}
       width={width}
       height={height}
       viewBox="0 0 16 16"

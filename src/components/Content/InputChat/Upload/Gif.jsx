@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { GifIcon } from '../../../Icons';
+import { AppContext } from '../../../../context/AppProvider';
 
 const Gif = () => {
+  const { topicTheme } = useContext(AppContext);
+
   return (
     <div className="flex-center w-7 h-7 p-4 rounded-full hover:bg-hover">
       <input
@@ -12,7 +15,7 @@ const Gif = () => {
         className="hidden"
       />
       <label className="flex-center w-7 h-7 p-1 cursor-pointer" htmlFor="file">
-        <GifIcon className="text-xl text-main-color" />
+        <GifIcon className="text-xl " style={{ color: topicTheme }} />
       </label>
     </div>
   );

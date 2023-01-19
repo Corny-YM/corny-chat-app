@@ -1,12 +1,17 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
+
+import { colors } from '../constants/colors';
 
 const AppContext = createContext();
-
 const AppProvider = ({ children }) => {
+  const curTopic = JSON.parse(localStorage.getItem('topic')) || colors[1];
   const [isSearching, setIsSearching] = useState(false);
   const [showConversation, setShowConversation] = useState(false);
+  const [topicTheme, setTopicTheme] = useState(curTopic);
 
-  console.log(showConversation);
+  useEffect(() => {
+    localStorage.setItem('topic', JSON.stringify(topicTheme));
+  }, [topicTheme]);
 
   return (
     <AppContext.Provider
@@ -15,6 +20,8 @@ const AppProvider = ({ children }) => {
         setIsSearching,
         showConversation,
         setShowConversation,
+        topicTheme,
+        setTopicTheme,
       }}
     >
       {children}

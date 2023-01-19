@@ -8,6 +8,7 @@ import { faFaceSmile } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { InputChatContext } from '../../../context/InputChatProvider';
+import { AppContext } from '../../../context/AppProvider';
 
 const renderEmojiMart = (isShowPicker = false, setValue) => {
   return (
@@ -24,6 +25,7 @@ const Input = () => {
   const [value, setValue] = useState('');
   const [isShowPicker, setIsShowPicker] = useState(false);
 
+  const { topicTheme } = useContext(AppContext);
   const { setIsTexting } = useContext(InputChatContext);
 
   const handleClick = () => {
@@ -65,7 +67,8 @@ const Input = () => {
           className="flex-center absolute right-2 top-[50%] -translate-y-1/2 p-2 rounded-full cursor-pointer bg-home-search hover:bg-hover"
         >
           <FontAwesomeIcon
-            className="text-main-color font-bold"
+            style={{ color: topicTheme }}
+            className="font-bold"
             icon={faFaceSmile}
           />
         </div>

@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 
-import Tippy from '@tippyjs/react';
 import { faChevronLeft, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -8,7 +7,7 @@ import { AppContext } from '../../../context/AppProvider';
 import { InfoChatContext } from '../../../context/InfoChatProvider';
 
 const UserInfoChat = () => {
-  const { setShowConversation } = useContext(AppContext);
+  const { topicTheme, setShowConversation } = useContext(AppContext);
   const { showChatDetails, setShowChatDetails } = useContext(InfoChatContext);
 
   const handleClick = () => {
@@ -45,7 +44,8 @@ const UserInfoChat = () => {
           } flex-center rounded-full ml-1 p-[6px] cursor-pointer hover:bg-hover`}
         >
           <FontAwesomeIcon
-            className="text-[21px] text-main-color"
+            className="text-[21px]"
+            style={{ color: topicTheme }}
             icon={faCircleInfo}
           />
         </div>

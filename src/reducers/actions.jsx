@@ -11,3 +11,11 @@ export const showModal = (value) => {
     payload: value,
   };
 };
+
+export const showModalImgShared = (obj) => {
+  return {
+    type: 'SHOW_MODAL_IMG_SHARED',
+    // obj = {modalName, src}
+    payload: obj,
+  };
+};

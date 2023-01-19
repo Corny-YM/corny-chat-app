@@ -1,7 +1,5 @@
 import React, { useContext } from 'react';
 
-import { Collapse } from 'react-collapse';
-
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -10,8 +8,10 @@ import SharedPhotos from './SharedPhotos';
 import SharedVideos from './SharedVideos';
 import SharedFiles from './SharedFiles';
 import { InfoChatContext } from '../../context/InfoChatProvider';
+import { AppContext } from '../../context/AppProvider';
 
 const InfoChat = () => {
+  const { topicTheme } = useContext(AppContext);
   const { showChatDetails, setShowChatDetails } = useContext(InfoChatContext);
 
   const handleCloseInfoChat = () => {
@@ -33,7 +33,7 @@ const InfoChat = () => {
           onClick={handleCloseInfoChat}
           className="flex-center w-6 h-6 rounded-full cursor-pointer hover:bg-hover"
         >
-          <FontAwesomeIcon className="text-main-color" icon={faXmark} />
+          <FontAwesomeIcon style={{ color: topicTheme }} icon={faXmark} />
         </div>
       </div>
 

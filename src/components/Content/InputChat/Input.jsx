@@ -11,10 +11,12 @@ import { InputChatContext } from '../../../context/InputChatProvider';
 import { AppContext } from '../../../context/AppProvider';
 
 const renderEmojiMart = (isShowPicker = false, setValue) => {
+  const curTheme = JSON.parse(localStorage.getItem('theme'));
   return (
     isShowPicker && (
       <Picker
         data={data}
+        theme={curTheme}
         onEmojiSelect={(data) => setValue((prev) => prev + data.native)}
       />
     )
@@ -64,7 +66,7 @@ const Input = () => {
       >
         <div
           onClick={handleClick}
-          className="flex-center absolute right-2 top-[50%] -translate-y-1/2 p-2 rounded-full cursor-pointer bg-home-search hover:bg-hover"
+          className="flex-center absolute right-2 top-[50%] -translate-y-1/2 p-2 rounded-full cursor-pointer dark:bg-home-search hover:bg-hoverLightMode dark:hover:bg-hover"
         >
           <FontAwesomeIcon
             style={{ color: topicTheme }}

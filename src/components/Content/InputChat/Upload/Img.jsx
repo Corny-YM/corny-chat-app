@@ -9,7 +9,7 @@ const Img = () => {
   const { topicTheme } = useContext(AppContext);
 
   return (
-    <div className="flex-center w-7 h-7 p-4 rounded-full hover:bg-hover">
+    <div className="flex-center w-7 h-7 p-4 rounded-full hover:bg-hoverLightMode dark:hover:bg-hover">
       <input type="file" accept="image/*" id="fileImg" className="hidden" />
       <label className="flex-center cursor-pointer" htmlFor="fileImg">
         <FontAwesomeIcon

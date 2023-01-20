@@ -6,7 +6,7 @@ import Content from '../components/Content';
 const Home = () => {
   return (
     <div
-      className="w-screen h-screen bg-dark text-slate-100
+      className="w-screen h-screen bg-lightMode dark:bg-darkMode dark:text-slate-100
       sm:flex-center p-4 gap-2 duration-200"
     >
       <Sidebar />

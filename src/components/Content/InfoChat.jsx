@@ -22,7 +22,7 @@ const InfoChat = () => {
     <div
       className={`${
         !showChatDetails && 'hidden'
-      } flex-col fixed inset-0 md:absolute lg:relative lg:w-1/3 bg-dark p-2 flex`}
+      } flex-col fixed inset-0 md:absolute lg:relative lg:w-1/3 bg-lightMode dark:bg-darkMode p-2 flex`}
     >
       {/* header */}
       <div className="flex justify-between">
@@ -31,7 +31,7 @@ const InfoChat = () => {
         </div>
         <div
           onClick={handleCloseInfoChat}
-          className="flex-center w-6 h-6 rounded-full cursor-pointer hover:bg-hover"
+          className="flex-center w-6 h-6 rounded-full cursor-pointer dark:hover:bg-hover"
         >
           <FontAwesomeIcon style={{ color: topicTheme }} icon={faXmark} />
         </div>

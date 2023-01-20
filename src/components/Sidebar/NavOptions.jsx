@@ -5,43 +5,70 @@ import Tippy from '@tippyjs/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowRightFromBracket,
-  faMoon,
+  faCloudMoon,
+  faCloudSun,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import CurrentUserInfoModal from '../Modals/CurrentUserInfoModal';
 
+import { useDarkMode } from '../../hooks';
 import { showModal } from '../../reducers/actions';
 
-const renderControlAccount = (visible, setVisible, dispatch) => {
+const renderControlAccount = (
+  visible,
+  setVisible,
+  theme,
+  setCurTheme,
+  darkMode,
+  setDarkMode,
+  dispatch,
+) => {
   const handleClickShowModal = () => {
     dispatch(showModal('user-info'));
     setVisible(false);
   };
 
+  const toggleTheme = (e) => {
+    e.stopPropagation();
+    setDarkMode(!darkMode);
+    setCurTheme(theme);
+    localStorage.setItem('theme', JSON.stringify(theme));
+  };
+
   return (
     visible && (
       <div
-        className="relative p-2 w-48 flex flex-col gap-1 border-[2px] rounded-md rounded-b border-gray-600 text-white bg-dark"
+        className="relative p-2 w-48 flex flex-col gap-1 border-[2px] rounded-md rounded-b border-gray-600 dark:text-white bg-lightMode dark:bg-darkMode"
         tabIndex="10"
       >
         <div
           onClick={handleClickShowModal}
-          className="hover-smooth p-2 flex items-center rounded-md gap-2 cursor-pointer hover:bg-hover"
+          className="hover-smooth p-2 flex items-center rounded-md gap-2 cursor-pointer hover:bg-hoverLightMode dark:hover:bg-hover"
         >
           <FontAwesomeIcon
             className="flex-center w-5 h-5 text-[20px]"
             icon={faUser}
           />
-          <span>My Information</span>
+          <span>Your Profile</span>
         </div>
-        <div className="hover-smooth p-2 flex items-center rounded-md gap-2 cursor-pointer hover:bg-hover">
-          <FontAwesomeIcon
-            className="flex-center w-5 h-5 text-[20px]"
-            icon={faMoon}
-          />
-          <span>Dark Mode</span>
+        <div
+          onClick={toggleTheme}
+          className="hover-smooth p-2 flex items-center rounded-md gap-2 cursor-pointer hover:bg-hoverLightMode dark:hover:bg-hover"
+        >
+          {darkMode ? (
+            <FontAwesomeIcon
+              className="flex-center w-5 h-5 text-[20px]"
+              icon={faCloudMoon}
+            />
+          ) : (
+            <FontAwesomeIcon
+              className="flex-center w-5 h-5 text-[20px]"
+              icon={faCloudSun}
+            />
+          )}
+          <span>{darkMode ? 'Dark Mode' : 'Light Mode'}</span>
         </div>
-        <div className="hover-smooth p-2 flex items-center rounded-md gap-2 cursor-pointer hover:bg-hover">
+        <div className="hover-smooth p-2 flex items-center rounded-md gap-2 cursor-pointer hover:bg-hoverLightMode dark:hover:bg-hover">
           <FontAwesomeIcon
             className="flex-center w-5 h-5 text-[20px]"
             icon={faArrowRightFromBracket}
@@ -56,6 +83,9 @@ const renderControlAccount = (visible, setVisible, dispatch) => {
 const NavOptions = () => {
   const [visible, setVisible] = useState(false);
 
+  const [theme, setCurTheme] = useDarkMode();
+  const [darkMode, setDarkMode] = useState(true);
+
   const modalName = useSelector((state) => state.modalName);
   const dispatch = useDispatch();
 
@@ -66,7 +96,17 @@ const NavOptions = () => {
         visible={visible}
         placement="bottom-end"
         onClickOutside={() => setVisible(false)}
-        render={() => renderControlAccount(visible, setVisible, dispatch)}
+        render={() =>
+          renderControlAccount(
+            visible,
+            setVisible,
+            theme,
+            setCurTheme,
+            darkMode,
+            setDarkMode,
+            dispatch,
+          )
+        }
       >
         <div
           onClick={() => setVisible(!visible)}

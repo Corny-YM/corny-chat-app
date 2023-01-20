@@ -15,7 +15,7 @@ const renderTopicTheme = (showTopic, topicTheme, setTopicTheme) => {
   return (
     showTopic && (
       <ul
-        className="max-w-[300px] flex flex-wrap gap-1 bg-dark px-3 py-4 rounded-lg"
+        className="max-w-[300px] flex flex-wrap gap-1 bg-lightMode dark:bg-darkMode px-3 py-4 rounded-lg"
         style={{ border: 'solid 2px' + topicTheme }}
       >
         {colors.map((color, index) => (

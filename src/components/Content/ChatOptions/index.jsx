@@ -17,7 +17,7 @@ const ChatOptions = () => {
       <div className="flex items-center">
         <div
           onClick={() => setShow(!show)}
-          className="font-bold p-2 rounded-md cursor-pointer hover:bg-hover"
+          className="font-bold p-2 rounded-md cursor-pointer hover:bg-hoverLightMode dark:hover:bg-hover"
         >
           Customize Options
         </div>

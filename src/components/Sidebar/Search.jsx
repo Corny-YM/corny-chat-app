@@ -24,14 +24,13 @@ const Search = () => {
     <div className="w-full flex items-center mt-[20px] gap-1">
       <div
         className={`${!isSearching && 'hidden'} w-9 h-9 rounded-full flex-center
-        cursor-pointer hover:bg-hover`}
+        cursor-pointer hover:bg-hoverLightMode dark:hover:bg-hover`}
       >
         <FontAwesomeIcon className="text-[18px]" icon={faArrowLeft} />
       </div>
       <div
         onClick={handleClick}
-        className="w-full flex items-center px-4
-      bg-home-search rounded-3xl"
+        className="w-full flex items-center px-4 bg-inputLightMode dark:bg-home-search rounded-3xl"
       >
         {!isSearching && (
           <FontAwesomeIcon
@@ -42,7 +41,7 @@ const Search = () => {
         <input
           ref={inputRef}
           onBlur={handleBlur}
-          className="input-styled-home flex-1 bg-home-search"
+          className="input-styled-home flex-1 dark:bg-home-search"
           type="text"
           placeholder="Finding on CornyChat"
         />

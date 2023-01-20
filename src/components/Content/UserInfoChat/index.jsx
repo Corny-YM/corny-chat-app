@@ -19,7 +19,7 @@ const UserInfoChat = () => {
       {/* Back button */}
       <div
         onClick={handleClick}
-        className="flex-center sm:hidden w-7 h-7 mr-2 rounded-full cursor-pointer hover:bg-hover"
+        className="flex-center sm:hidden w-7 h-7 mr-2 rounded-full cursor-pointer hover:bg-hoverLightMode dark:hover:bg-hover"
       >
         <FontAwesomeIcon className="" icon={faChevronLeft} />
       </div>
@@ -41,7 +41,7 @@ const UserInfoChat = () => {
           onClick={() => setShowChatDetails(true)}
           className={`${
             showChatDetails && 'hidden'
-          } flex-center rounded-full ml-1 p-[6px] cursor-pointer hover:bg-hover`}
+          } flex-center rounded-full ml-1 p-[6px] cursor-pointer hover:bg-hoverLightMode dark:hover:bg-hover`}
         >
           <FontAwesomeIcon
             className="text-[21px]"

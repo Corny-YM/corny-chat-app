@@ -7,7 +7,7 @@ import ModalsTemplate from './ModalsTemplate';
 const CurrentUserInfoModal = () => {
   return (
     <ModalsTemplate>
-      <div className="flex-center bg-dark rounded-lg px-3 py-5">
+      <div className="flex-center bg-lightMode dark:bg-darkMode rounded-lg px-3 py-5">
         <div className="flex-center rounded-full overflow-hidden mx-4">
           <img className="object-cover" src="https://i.pravatar.cc/150?img=3" />
         </div>
@@ -24,7 +24,7 @@ const CurrentUserInfoModal = () => {
           <div className="min-h-[32px] flex items-center mb-1">
             <div className="font-bold mr-2">ID:</div>
             <div className="">FCvDDKbqAJTxJWqecVwLSvJfJGg2</div>
-            <div className="flex-center ml-5 px-2 py-1 rounded-md bg-hover cursor-pointer border-2 border-solid border-main-color">
+            <div className="flex-center ml-5 px-2 py-1 rounded-md bg-hoverLightMode dark:bg-hover cursor-pointer border-2 border-solid border-main-color">
               <FontAwesomeIcon className="text-xl" icon={faClipboard} />
             </div>
           </div>

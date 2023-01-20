@@ -6,7 +6,7 @@ const SearchList = () => {
       {/* item search */}
       <div className="flex-center justify-start relative pt-2 group">
         {/* GROUP */}
-        <div className="w-full flex-center justify-start rounded-2xl cursor-pointer p-2 hover:bg-hover">
+        <div className="w-full flex-center justify-start rounded-2xl cursor-pointer p-2 hover:bg-hoverLightMode dark:hover:bg-hover">
           <div className="w-14 h-14 flex-center rounded-full overflow-hidden mr-3">
             <img
               className="object-cover"

@@ -40,7 +40,7 @@ const AddGroupChatModal = () => {
 
   return (
     <ModalsTemplate>
-      <div className="flex-center bg-dark rounded-lg px-3 py-5">
+      <div className="flex-center bg-lightMode dark:bg-darkMode rounded-lg px-3 py-5">
         <form className="py-3 px-5">
           <div className="flex flex-col mb-5">
             <div className="font-bold mb-2">Name Group: </div>

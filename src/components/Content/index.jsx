@@ -12,7 +12,7 @@ const Content = () => {
     <div
       className={`${
         !showConversation && 'hidden'
-      } fixed inset-0 p-3 sm:relative sm:flex flex-1 h-full md:p-0 bg-dark`}
+      } fixed inset-0 p-3 sm:relative sm:flex flex-1 h-full md:p-0 bg-lightMode dark:bg-darkMode`}
     >
       <InfoChatProvider>
         <Chat />

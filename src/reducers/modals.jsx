@@ -6,7 +6,13 @@ const initState = {
 const modalsReducer = (state = initState, action) => {
   switch (action.type) {
     case 'SHOW_MODAL_IMG_SHARED': {
-      console.log(action);
+      return {
+        ...state,
+        modalName: action.payload.modalName,
+        src: action.payload.src,
+      };
+    }
+    case 'SHOW_MODAL_VID_SHARED': {
       return {
         ...state,
         modalName: action.payload.modalName,

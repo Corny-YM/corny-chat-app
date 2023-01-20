@@ -7,7 +7,7 @@ const Gif = () => {
   const { topicTheme } = useContext(AppContext);
 
   return (
-    <div className="flex-center w-7 h-7 p-4 rounded-full hover:bg-hover">
+    <div className="flex-center w-7 h-7 p-4 rounded-full hover:bg-hoverLightMode dark:hover:bg-hover">
       <input
         type="file"
         accept=".pdf, text/plain, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"

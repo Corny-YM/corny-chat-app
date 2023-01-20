@@ -16,10 +16,10 @@ const AddGroup = () => {
   };
 
   return (
-    <div className="w-full h-14 flex-center bg-dark">
+    <div className="w-full h-14 flex-center bg-lightMode dark:bg-darkMode">
       <div
         onClick={handleShow}
-        className="flex-center p-2 rounded-xl cursor-pointer hover:bg-hover"
+        className="flex-center p-2 rounded-xl cursor-pointer hover:bg-hoverLightMode dark:hover:bg-hover"
       >
         <FontAwesomeIcon icon={faUsersRectangle} />
         <span className="pl-2 font-bold">Add a new group conversation</span>

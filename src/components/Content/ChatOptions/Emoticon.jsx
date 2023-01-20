@@ -5,7 +5,8 @@ import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 
 const renderIcon = (showIcon) => {
-  return showIcon && <Picker data={data} />;
+  const curTheme = JSON.parse(localStorage.getItem('theme'));
+  return showIcon && <Picker data={data} theme={curTheme} />;
 };
 
 const Emoticon = () => {
@@ -25,7 +26,8 @@ const Emoticon = () => {
       >
         <div
           onClick={handleClick}
-          className="h-full flex-center p-2 mb-2 cursor-pointer rounded-full hover:bg-hover"
+          className="h-full flex-center p-2 mb-2 cursor-pointer rounded-full 
+          hover:bg-hoverLightMode dark:hover:bg-hover"
         >
           🌽
         </div>

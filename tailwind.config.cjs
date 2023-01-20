@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  darkMode: 'class',
   theme: {
     fontFamily: {
       SSP: ['"Source Sans Pro"', 'sans-serif'],
@@ -9,6 +10,13 @@ module.exports = {
       rubikWet: ['"Rubik Wet Paint"'],
     },
     extend: {
+      backgroundColor: {
+        darkMode: '#091419',
+        lightDarkMode: '#343142',
+        lightMode: '#E7E7E7',
+        hoverLightMode: 'rgba(0,0,0,0.3)',
+        inputLightMode: '#d1d5db',
+      },
       colors: {
         'main-color': '#b55329', //orange
         'main-color-darker': '#7f3219', // orange

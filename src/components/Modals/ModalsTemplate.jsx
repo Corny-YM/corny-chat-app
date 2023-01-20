@@ -11,8 +11,6 @@ const ModalsTemplate = ({ children }) => {
   const { topicTheme } = useContext(AppContext);
   const dispatch = useDispatch();
 
-  console.log(topicTheme);
-
   const handleCloseModal = (e) => {
     e.stopPropagation();
     dispatch(closeModal());

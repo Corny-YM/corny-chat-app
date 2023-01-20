@@ -19,3 +19,10 @@ export const showModalImgShared = (obj) => {
     payload: obj,
   };
 };
+export const showModalVidShared = (obj) => {
+  return {
+    type: 'SHOW_MODAL_VID_SHARED',
+    // obj = {modalName, src}
+    payload: obj,
+  };
+};

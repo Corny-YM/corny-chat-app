@@ -1,10 +1,64 @@
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+// firebase
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { auth, db, storage } from '../firebase/config';
+
 import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { faImage } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
-import { Link } from 'react-router-dom';
+
+import { doc, setDoc } from 'firebase/firestore';
 
 const Register = () => {
+  const [error, setError] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const displayName = e.target[0].value;
+    const email = e.target[1].value;
+    const password = e.target[2].value;
+    const file = e.target[3].files[0];
+
+    try {
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+      const storageRef = ref(storage, `/avatar/${file.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => snapshot,
+        (error) => {
+          setError(true);
+          console.log(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+            // Update Authentication
+            await updateProfile(res.user, {
+              displayName: displayName,
+              photoURL: downloadURL,
+            });
+
+            // Add Document
+            await setDoc(doc(db, 'users', res.user.uid), {
+              uid: res.user.uid,
+              displayName,
+              email,
+              photoURL: downloadURL,
+            });
+
+            navigate('/');
+          });
+        },
+      );
+    } catch (err) {
+      setError(true);
+    }
+  };
+
   return (
     <div className="w-screen h-screen flex-center flex-wrap bg-dark">
       <div
@@ -17,18 +71,24 @@ const Register = () => {
         <span className="sm:text-[20px] text-[16px] font-rubikDirt">
           Register
         </span>
-        <form className="w-full flex-center flex-col gap-[10px]">
+        <form
+          onSubmit={handleSubmit}
+          className="w-full flex-center flex-col gap-[10px]"
+        >
           <input
+            required
             className="input-styled"
             type="text"
             placeholder="Display name"
           />
           <input
+            required
             className="input-styled"
             type="email"
             placeholder="Email address"
           />
           <input
+            required
             className="input-styled"
             type="password"
             placeholder="Password"
@@ -47,6 +107,9 @@ const Register = () => {
           </label>
           <button className="w-full button-styled">Log in</button>
         </form>
+        {error && (
+          <div className="font-bold text-xl">Something went wrong!</div>
+        )}
         <p>
           You do have an account?{' '}
           <Link to="/login" className="font-bold text-bg-messages">

@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
+// firebase
+import { signOut } from 'firebase/auth';
+import { auth } from '../../firebase/config';
 
 import Tippy from '@tippyjs/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,10 +13,11 @@ import {
   faCloudSun,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
-import CurrentUserInfoModal from '../Modals/CurrentUserInfoModal';
 
+import CurrentUserInfoModal from '../Modals/CurrentUserInfoModal';
 import { useDarkMode } from '../../hooks';
 import { showModal } from '../../reducers/actions';
+import { AuthContext } from '../../context/AuthContext';
 
 const renderControlAccount = (
   visible,
@@ -33,6 +38,11 @@ const renderControlAccount = (
     setDarkMode(!darkMode);
     setCurTheme(theme);
     localStorage.setItem('theme', JSON.stringify(theme));
+  };
+
+  const handleSignOut = () => {
+    signOut(auth);
+    console.log(auth);
   };
 
   return (
@@ -68,7 +78,10 @@ const renderControlAccount = (
           )}
           <span>{darkMode ? 'Dark Mode' : 'Light Mode'}</span>
         </div>
-        <div className="hover-smooth p-2 flex items-center rounded-md gap-2 cursor-pointer hover:bg-hoverLightMode dark:hover:bg-hover">
+        <div
+          onClick={handleSignOut}
+          className="hover-smooth p-2 flex items-center rounded-md gap-2 cursor-pointer hover:bg-hoverLightMode dark:hover:bg-hover"
+        >
           <FontAwesomeIcon
             className="flex-center w-5 h-5 text-[20px]"
             icon={faArrowRightFromBracket}
@@ -85,6 +98,8 @@ const NavOptions = () => {
 
   const [theme, setCurTheme] = useDarkMode();
   const [darkMode, setDarkMode] = useState(true);
+
+  const { currentUser } = useContext(AuthContext);
 
   const modalName = useSelector((state) => state.modalName);
   const dispatch = useDispatch();
@@ -113,7 +128,7 @@ const NavOptions = () => {
           className="w-9 h-9 rounded-[50%] overflow-hidden 
             border-2 cursor-pointer "
         >
-          <img className="object-cover" src="https://i.pravatar.cc/150?img=3" />
+          <img className="object-cover" src={currentUser?.photoURL} />
         </div>
       </Tippy>
       {modalName === 'user-info' && <CurrentUserInfoModal />}

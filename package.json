@@ -19,7 +19,7 @@
     "@reduxjs/toolkit": "^1.9.1",
     "@tippyjs/react": "^4.2.6",
     "emoji-mart": "^5.4.0",
-    "firebase": "^9.15.0",
+    "firebase": "^9.16.0",
     "react": "^18.2.0",
     "react-collapse": "^5.1.1",
     "react-dom": "^18.2.0",

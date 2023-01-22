@@ -1,9 +1,30 @@
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+// firebase
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase/config';
+
 import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
-import { Link } from 'react-router-dom';
 
 const Login = () => {
+  const [err, setErr] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmitEmailAndPassword = async (e) => {
+    e.preventDefault();
+    const email = e.target[0].value;
+    const password = e.target[1].value;
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate('/');
+    } catch (err) {
+      setErr(true);
+    }
+  };
+
   return (
     <div className="w-screen h-screen flex-center flex-wrap bg-dark">
       <div
@@ -14,7 +35,10 @@ const Login = () => {
           🌽 CORNY CHAT 🌽
         </span>
         <span className="sm:text-[20px] text-[16px] font-rubikDirt">Login</span>
-        <form className="w-full flex-center flex-col gap-[10px]">
+        <form
+          onSubmit={handleSubmitEmailAndPassword}
+          className="w-full flex-center flex-col gap-[10px]"
+        >
           <input
             className="input-styled"
             type="email"
@@ -25,7 +49,9 @@ const Login = () => {
             type="password"
             placeholder="Password"
           />
-          <button className="w-full button-styled sm:mt-8 mt-4">Log in</button>
+          <button type="submit" className="w-full button-styled sm:mt-8 mt-4">
+            Log in
+          </button>
         </form>
         <p>--------------- or Login with ---------------</p>
         <div className="w-full flex-center justify-around">

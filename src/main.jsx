@@ -6,13 +6,16 @@ import './index.css';
 import App from './App';
 import AppProvider from './context/AppProvider';
 import store from './reducers';
+import { AuthContextProvider } from './context/AuthContext';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   // <React.StrictMode>
-  <Provider store={store}>
-    <AppProvider>
-      <App />
-    </AppProvider>
-  </Provider>,
+  <AuthContextProvider>
+    <Provider store={store}>
+      <AppProvider>
+        <App />
+      </AppProvider>
+    </Provider>
+  </AuthContextProvider>,
   // </React.StrictMode>,
 );

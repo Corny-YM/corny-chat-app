@@ -21,12 +21,7 @@ const ModalsTemplate = ({ children }) => {
       onClick={handleCloseModal}
       className="flex-center backdrop-blur-lg fixed inset-0 z-50 p-8 bg-[rgba(0,0,0,0.75)]"
     >
-      <div
-        className="w-full h-full flex-center"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {children}
-      </div>
+      <div onClick={(e) => e.stopPropagation()}>{children}</div>
 
       <div
         onClick={handleCloseModal}

@@ -6,6 +6,7 @@ import SearchList from './SearchList';
 import Nav from './Nav';
 import AddGroup from './AddGroup';
 import { AppContext } from '../../context/AppProvider';
+import ChatSearch from './ChatSearch';
 
 const Sidebar = () => {
   const { isSearching } = useContext(AppContext);
@@ -19,10 +20,8 @@ const Sidebar = () => {
       <Nav />
 
       {/* Search */}
-      <Search />
-
       {/* Chat List */}
-      {isSearching ? <SearchList /> : <ChatList />}
+      <ChatSearch isSearching={isSearching} />
 
       {/* Add Group */}
       <AddGroup />

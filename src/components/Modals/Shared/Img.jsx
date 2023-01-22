@@ -5,10 +5,7 @@ import ModalsTemplate from '../ModalsTemplate';
 const Img = ({ src = 'https://i.pravatar.cc/150?img=15' }) => {
   return (
     <ModalsTemplate>
-      <img
-        className="w-full md:w-auto md:h-full mx-auto rounded-lg"
-        src={src}
-      />
+      <img className="w-[650px] mx-auto rounded-lg" src={src} />
     </ModalsTemplate>
   );
 };

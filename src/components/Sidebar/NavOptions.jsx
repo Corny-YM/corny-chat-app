@@ -125,10 +125,10 @@ const NavOptions = () => {
       >
         <div
           onClick={() => setVisible(!visible)}
-          className="w-9 h-9 rounded-[50%] overflow-hidden 
+          className="w-9 h-9 flex-center rounded-full overflow-hidden 
             border-2 cursor-pointer "
         >
-          <img className="object-cover" src={currentUser?.photoURL} />
+          <img className="h-full object-cover" src={currentUser?.photoURL} />
         </div>
       </Tippy>
       {modalName === 'user-info' && <CurrentUserInfoModal />}

@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 
 import { AuthContext } from './context/AuthContext';
+import RoomId from './pages/RoomId';
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -22,6 +23,7 @@ function App() {
       <Routes>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/:roomId" element={<RoomId />} />
         <Route
           path="/"
           element={

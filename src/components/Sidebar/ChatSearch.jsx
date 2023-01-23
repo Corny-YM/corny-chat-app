@@ -18,7 +18,7 @@ const ChatSearch = ({ isSearching }) => {
     const usersRef = collection(db, 'users');
     // Create a query against the collection.
     // const q = query(usersRef, where('displayName', '<=', username));
-    const q = query(usersRef, limit(5));
+    const q = query(usersRef);
     try {
       let arr = [];
       const querySnapshot = await getDocs(q);
@@ -48,10 +48,18 @@ const ChatSearch = ({ isSearching }) => {
       <Search
         username={username}
         setUsername={setUsername}
-        onKeyDown={handleKeyDown}
         setUser={setUser}
+        onKeyDown={handleKeyDown}
       />
-      {isSearching ? <SearchList users={user} /> : <ChatList />}
+      <div className="relative flex flex-col flex-1 w-full">
+        <ChatList />
+        <SearchList
+          isSearching={isSearching}
+          setUser={setUser}
+          setUsername={setUsername}
+          users={user}
+        />
+      </div>
     </>
   );
 };

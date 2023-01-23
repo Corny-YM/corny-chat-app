@@ -11,6 +11,7 @@ import { faImage } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { doc, setDoc } from 'firebase/firestore';
+import { createNewUser } from '../firebase/services';
 
 const Register = () => {
   const [error, setError] = useState(false);
@@ -42,13 +43,8 @@ const Register = () => {
               photoURL: downloadURL,
             });
 
-            // Add Document
-            await setDoc(doc(db, 'users', res.user.uid), {
-              uid: res.user.uid,
-              displayName,
-              email,
-              photoURL: downloadURL,
-            });
+            // Add Document account to collection 'users'
+            await createNewUser(displayName, email, downloadURL, res.user.uid);
 
             navigate('/');
           });
@@ -105,7 +101,7 @@ const Register = () => {
             />
             <span className="">Add an avatar</span>
           </label>
-          <button className="w-full button-styled">Log in</button>
+          <button className="w-full button-styled">Sign in</button>
         </form>
         {error && (
           <div className="font-bold text-xl">Something went wrong!</div>

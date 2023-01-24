@@ -13,13 +13,19 @@ import {
 import { db } from './config';
 import moment from 'moment/moment';
 
-// CHECK
-export const isCreatedRoomFriend = (members) => {
+// CHECK & GET
+export const getUser = (uid) => {
+  const ref = collection(db, 'users');
+  const q = query(ref, where('uid', '==', uid));
+  return getDocs(q);
+};
+
+export const isCreatedRoomFriend = (member) => {
   const ref = collection(db, 'rooms');
   const q = query(
     ref,
     where('chatType', '==', 'friend'),
-    where('members', '==', members),
+    where('members', 'array-contains', member),
   );
   return getDocs(q);
 };

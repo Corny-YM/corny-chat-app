@@ -128,7 +128,10 @@ const NavOptions = () => {
           className="w-9 h-9 flex-center rounded-full overflow-hidden 
             border-2 cursor-pointer "
         >
-          <img className="h-full object-cover" src={currentUser?.photoURL} />
+          <img
+            className="w-full h-full object-cover"
+            src={currentUser?.photoURL}
+          />
         </div>
       </Tippy>
       {modalName === 'user-info' && <CurrentUserInfoModal />}

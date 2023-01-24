@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import moment from 'moment/moment';
 
 import {
@@ -14,6 +15,8 @@ const SearchList = ({ isSearching, setUser, setUsername, users }) => {
   const { currentUser } = useContext(AuthContext);
   const { setIsSearching } = useContext(AppContext);
   const [members, setMembers] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setMembers([
@@ -35,10 +38,23 @@ const SearchList = ({ isSearching, setUser, setUsername, users }) => {
         uid: user.uid,
         isAdmin: true,
       });
-      const res = await isCreatedRoomFriend(arrMembers); // res = docs
+      const res = await isCreatedRoomFriend({
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        uid: user.uid,
+        isAdmin: true,
+      }); // res = docs
+
       // created
-      if (res.size == 1) {
-        console.log('created');
+      if (res.size) {
+        // navigate to the <RoomId/> => show chat
+        res.forEach((doc) => {
+          doc.data().members.forEach((mem) => {
+            if (mem.uid == currentUser.uid) {
+              navigate('/' + doc.id);
+            }
+          });
+        });
       } else {
         // create new for collection 'rooms'
         const res = await createNewRoom(
@@ -84,7 +100,7 @@ const SearchList = ({ isSearching, setUser, setUsername, users }) => {
               />
             </div>
             <div className="flex flex-col flex-1">
-              <p className="whitespace-nowrap overflow-hidden overflow-ellipsis">
+              <p className="whitespace-nowrap overflow-hidden overflow-ellipsis font-bold">
                 {user?.displayName}
               </p>
             </div>

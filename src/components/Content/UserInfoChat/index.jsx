@@ -1,14 +1,33 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import { faChevronLeft, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { AppContext } from '../../../context/AppProvider';
 import { InfoChatContext } from '../../../context/InfoChatProvider';
+import { AuthContext } from '../../../context/AuthContext';
 
-const UserInfoChat = () => {
+import useListRoomsData from '../../../hooks/useListRoomsData';
+
+import NoGroupImg from '../../../assets/imgs/NoGroupImg.jpg';
+
+const UserInfoChat = ({ roomInfo }) => {
+  const [friend, setFriend] = useState({});
+  const { currentUser } = useContext(AuthContext);
   const { topicTheme, setShowConversation } = useContext(AppContext);
   const { showChatDetails, setShowChatDetails } = useContext(InfoChatContext);
+
+  useEffect(() => {
+    if (roomInfo.chatType === 'friend') {
+      const index = roomInfo.members.findIndex(
+        (mem) => mem.uid != currentUser.uid,
+      );
+      setFriend(roomInfo.members[index]);
+    } else {
+      setFriend({});
+    }
+  }, [roomInfo]);
 
   const handleClick = () => {
     setShowConversation(false);
@@ -25,14 +44,14 @@ const UserInfoChat = () => {
       </div>
       {/* Img Name Group or User chat */}
       <div className="h-[52px] flex flex-1 flex-grow items-center overflow-hidden">
-        <div className="flex-center w-10 h-10 mr-[6px] my-[6px] overflow-hidden rounded-full">
+        <div className="flex-center w-10 h-10 mr-[6px] md:mr-3 my-[6px] overflow-hidden rounded-full">
           <img
-            className="object-contain"
-            src="https://i.pravatar.cc/150?img=1"
+            className="w-full h-full object-cover"
+            src={friend?.photoURL || roomInfo?.chatAvatar || NoGroupImg}
           />
         </div>
-        <div className="w-full flex flex-1 pr-3 text-[17px] font-bold tracking-wider text-ellipsis">
-          The Michael
+        <div className="w-full flex flex-1 lg:text-xl pr-3 text-[17px] font-bold tracking-wider text-ellipsis capitalize">
+          {friend?.displayName || roomInfo?.roomName}
         </div>
       </div>
       {/* More: setting */}

@@ -17,7 +17,7 @@ const ChatListItem = ({ roomId }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (chatType === 'friend') {
+    if (chatType == 'friend') {
       const index = members.findIndex((mem) => mem.uid != currentUser.uid);
       setFriend(members[index]);
     }

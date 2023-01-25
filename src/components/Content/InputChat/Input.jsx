@@ -23,35 +23,42 @@ const renderEmojiMart = (isShowPicker = false, setValue) => {
   );
 };
 
-const Input = () => {
-  const [value, setValue] = useState('');
+const Input = ({ onSendMessage, stateInput }) => {
   const [isShowPicker, setIsShowPicker] = useState(false);
+  const { valueInput, setValueInput } = stateInput;
 
   const { topicTheme } = useContext(AppContext);
   const { setIsTexting } = useContext(InputChatContext);
+
+  useEffect(() => {
+    if (valueInput == '') {
+      setIsTexting(false);
+      return;
+    }
+
+    setIsTexting(true);
+  }, [valueInput]);
 
   const handleClick = () => {
     setIsShowPicker(!isShowPicker);
   };
 
   const handleChange = (e) => {
-    setValue(e.target.value);
+    setValueInput(e.target.value);
   };
 
-  useEffect(() => {
-    if (value == '') {
-      setIsTexting(false);
-      return;
+  const handleKeyDown = (e) => {
+    if (e.code == 'Enter') {
+      onSendMessage();
     }
-
-    setIsTexting(true);
-  }, [value]);
+  };
 
   return (
     <div className="flex-1 flex mx-1 py-1 rounded-[20px] relative">
       <input
-        value={value}
+        value={valueInput}
         onChange={handleChange}
+        onKeyDown={handleKeyDown}
         spellCheck={false}
         className="w-full input-styled-chat px-4 py-2 rounded-[20px]"
         placeholder="Aa"
@@ -62,7 +69,7 @@ const Input = () => {
         placement="top-end"
         onClickOutside={() => setIsShowPicker(false)}
         visible={isShowPicker}
-        render={() => renderEmojiMart(isShowPicker, setValue)}
+        render={() => renderEmojiMart(isShowPicker, setValueInput)}
       >
         <div
           onClick={handleClick}

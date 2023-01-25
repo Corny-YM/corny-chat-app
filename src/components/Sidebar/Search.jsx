@@ -45,6 +45,7 @@ const Search = ({ username, setUsername, setUser, onKeyDown }) => {
         <input
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          onFocus={() => setIsSearching(true)}
           onKeyDown={onKeyDown}
           ref={inputRef}
           className="input-styled-home flex-1 dark:bg-home-search"

@@ -12,11 +12,15 @@ import { AppContext } from '../../../context/AppProvider';
 import { showModalImgShared } from '../../../reducers/actions';
 import Img from '../../Modals/Shared/Img';
 import Message from './Message';
+import useMessagesData from '../../../hooks/useMessagesData';
 
-const Messages = () => {
+const Messages = ({ roomId, members }) => {
   const { topicTheme } = useContext(AppContext);
   const { modalName, src } = useSelector((state) => state);
   const dispatch = useDispatch();
+
+  // roomId, amount = limit
+  const { messages } = useMessagesData(roomId, 50);
 
   const handleShow = (src) => {
     dispatch(
@@ -32,9 +36,16 @@ const Messages = () => {
       <div className="flex-1 flex flex-col overflow-overlay">
         {/* Item message */}
         {/* Ower */}
-        <Message />
+        {messages.map((message) => (
+          <Message
+            key={message.id}
+            messageInfo={message}
+            membersInfo={members}
+            handleShowModalImg={handleShow}
+          />
+        ))}
 
-        <div className="w-full flex mb-1 sm:px-3 gap-2 group">
+        {/* <div className="w-full flex mb-1 sm:px-3 gap-2 group">
           <img
             className="w-8 h-8 rounded-full"
             src="https://i.pravatar.cc/150?img=3"
@@ -60,10 +71,10 @@ const Messages = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* ======================IMG, GIF & VID=============================== */}
-        <div className="w-full flex mb-1 sm:px-3 gap-2 group owner">
+        {/* <div className="w-full flex mb-1 sm:px-3 gap-2 group owner">
           <div className="flex items-center overflow-hidden owner">
             <img
               onClick={() => handleShow('https://i.pravatar.cc/150?img=3')}
@@ -134,10 +145,10 @@ const Messages = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         {/* ===================================================== */}
 
-        <div className="w-full flex mb-1 sm:px-3 gap-2 group owner">
+        {/* <div className="w-full flex mb-1 sm:px-3 gap-2 group owner">
           <div className="flex items-center overflow-hidden owner">
             <video
               className="message-vid"
@@ -156,7 +167,7 @@ const Messages = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
       {modalName == 'img-shared' && <Img src={src} />}
       {/* {modalName == 'delete-message' && <Img src={src} />} */}

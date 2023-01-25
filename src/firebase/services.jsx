@@ -3,6 +3,7 @@ import {
   arrayUnion,
   collection,
   doc,
+  getDoc,
   getDocs,
   query,
   serverTimestamp,
@@ -49,6 +50,20 @@ export const createNewRoom = (roomName, members, chatType, avatar = '') => {
     members: members, // array [{name, img, uid, isAdmin}]
     lastTimeOnline: serverTimestamp(),
     lastMessage: '',
+    emoji: { id: '+1', skin: 1 },
+  });
+};
+
+export const addNewMessage = (roomId, currentUserUID, message) => {
+  const ref = doc(db, 'messages', String(new Date().getTime()));
+  return setDoc(ref, {
+    roomId: roomId,
+    senderId: currentUserUID,
+    chatContent: message,
+    time: serverTimestamp(),
+    type: 'message',
+    fileName: '',
+    reactions: [],
   });
 };
 

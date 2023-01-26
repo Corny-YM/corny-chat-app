@@ -3,11 +3,11 @@ import Gif from './Upload/Gif';
 import Img from './Upload/Img';
 import Vid from './Upload/Vid';
 
-const Actions = () => {
+const Actions = ({ roomId }) => {
   return (
     <div className="flex items-center gap-1">
       {/* upload img */}
-      <Img />
+      <Img roomId={roomId} />
 
       {/* upload vid */}
       <Vid />

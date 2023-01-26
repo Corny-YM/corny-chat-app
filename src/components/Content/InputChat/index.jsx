@@ -7,7 +7,11 @@ import SendMessage from './Sending/SendMessage';
 
 import { InputChatContext } from '../../../context/InputChatProvider';
 import { AuthContext } from '../../../context/AuthContext';
-import { addNewMessage } from '../../../firebase/services';
+import {
+  addNewMessage,
+  updateLastMessage,
+  updateLastTimeOnline,
+} from '../../../firebase/services';
 
 const InputChat = ({ roomId, roomInfo }) => {
   const [valueInput, setValueInput] = useState('');
@@ -21,15 +25,23 @@ const InputChat = ({ roomId, roomInfo }) => {
       return;
     }
 
+    // Create new message
     // roomId, currentUserUID, message
     await addNewMessage(roomId, currentUser.uid, trimValInput);
+
+    // Update last message for that room
+    await updateLastMessage(roomId, currentUser.uid, trimValInput);
+
+    // Update last time online
+    await updateLastTimeOnline(roomId);
+
     setValueInput('');
   };
 
   return (
     <div className="flex items-center pt-3 gap-1 h-14">
       {/* Actions */}
-      {!isTexting && <Actions />}
+      {!isTexting && <Actions roomId={roomId} />}
 
       {/* Input */}
       <Input

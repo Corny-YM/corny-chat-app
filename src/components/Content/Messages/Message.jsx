@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import moment from 'moment';
@@ -22,12 +22,22 @@ const Message = ({ messageInfo, membersInfo, handleShowModalImg }) => {
     messageInfo;
   const { currentUser } = useContext(AuthContext);
 
+  const refLastMessage = useRef();
+  useEffect(() => {
+    refLastMessage.current?.scrollIntoView({
+      block: 'end',
+      behavior: 'smooth',
+      inline: 'nearest',
+    });
+  }, [messageInfo]);
+
   const sender = (uid) => {
     return membersInfo?.find((mem) => mem.uid === uid);
   };
 
   return (
     <div
+      ref={refLastMessage}
       className={`w-full flex mb-1 sm:px-3 gap-2 group ${
         senderId == currentUser.uid ? 'owner' : ''
       }`}
@@ -39,7 +49,7 @@ const Message = ({ messageInfo, membersInfo, handleShowModalImg }) => {
         />
       )}
       <div
-        className={`flex items-center overflow-hidden ${
+        className={`flex items-center overflow-hidden max-w-[60%] md:max-w-[75%] ${
           senderId == currentUser.uid ? 'owner' : ''
         }`}
       >
@@ -53,7 +63,7 @@ const Message = ({ messageInfo, membersInfo, handleShowModalImg }) => {
                   }
                 : {}
             }
-            className={`flex flex-col max-w-[60%] md:max-w-[75%] px-3 py-2 rounded-[18px] ${
+            className={`flex flex-col px-3 py-2 rounded-[18px] w-fit ${
               senderId == currentUser.uid
                 ? 'owner'
                 : 'bg-inputLightMode dark:bg-messages'
@@ -67,8 +77,8 @@ const Message = ({ messageInfo, membersInfo, handleShowModalImg }) => {
         ) : type == 'image' ? (
           <img
             className="rounded-xl max-w-[50%] message-img"
-            src={fileName}
-            onClick={() => handleShowModalImg(fileName)}
+            src={chatContent}
+            onClick={() => handleShowModalImg(chatContent)}
           />
         ) : type == 'video' ? (
           <video className="message-vid" controls src={fileName} />

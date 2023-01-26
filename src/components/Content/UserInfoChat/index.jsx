@@ -15,7 +15,8 @@ import NoGroupImg from '../../../assets/imgs/NoGroupImg.jpg';
 const UserInfoChat = ({ roomInfo }) => {
   const [friend, setFriend] = useState({});
   const { currentUser } = useContext(AuthContext);
-  const { topicTheme, setShowConversation } = useContext(AppContext);
+  const { topicTheme, showConversation, setShowConversation } =
+    useContext(AppContext);
   const { showChatDetails, setShowChatDetails } = useContext(InfoChatContext);
 
   useEffect(() => {
@@ -38,7 +39,7 @@ const UserInfoChat = ({ roomInfo }) => {
       {/* Back button */}
       <div
         onClick={handleClick}
-        className="flex-center sm:hidden w-7 h-7 mr-2 rounded-full cursor-pointer hover:bg-hoverLightMode dark:hover:bg-hover"
+        className="flex-center md:hidden w-7 h-7 mr-2 rounded-full cursor-pointer hover:bg-hoverLightMode dark:hover:bg-hover"
       >
         <FontAwesomeIcon className="" icon={faChevronLeft} />
       </div>

@@ -49,16 +49,16 @@ export const createNewRoom = (roomName, members, chatType, avatar = '') => {
     chatType: chatType,
     members: members, // array [{name, img, uid, isAdmin}]
     lastTimeOnline: serverTimestamp(),
-    lastMessage: '',
+    lastMessage: {},
     emoji: { id: '+1', skin: 1 },
   });
 };
 
-export const addNewMessage = (roomId, currentUserUID, message) => {
+export const addNewMessage = (roomId, senderId, message) => {
   const ref = doc(db, 'messages', String(new Date().getTime()));
   return setDoc(ref, {
     roomId: roomId,
-    senderId: currentUserUID,
+    senderId: senderId,
     chatContent: message,
     time: serverTimestamp(),
     type: 'message',
@@ -67,9 +67,39 @@ export const addNewMessage = (roomId, currentUserUID, message) => {
   });
 };
 
+export const addNewMessageFileMedia = (roomId, senderId, url, fileName) => {
+  const ref = doc(db, 'messages', String(new Date().getTime()));
+  return setDoc(ref, {
+    roomId: roomId,
+    senderId: senderId,
+    chatContent: url,
+    time: serverTimestamp(),
+    type: 'image',
+    fileName: fileName,
+    reactions: [],
+  });
+};
+
 // UPDATE
 export const updateUserRooms = (uid, roomId) => {
   return updateDoc(doc(db, 'users', uid), {
     rooms: arrayUnion(roomId),
+  });
+};
+
+export const updateLastMessage = (roomId, uid, content) => {
+  const refRoom = doc(db, 'rooms', roomId);
+  return updateDoc(refRoom, {
+    lastMessage: {
+      senderId: uid,
+      content: content,
+    },
+  });
+};
+
+export const updateLastTimeOnline = (roomId) => {
+  const refRoom = doc(db, 'rooms', roomId);
+  return updateDoc(refRoom, {
+    lastTimeOnline: serverTimestamp(),
   });
 };

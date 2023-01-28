@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ChangeGroupNameModal from '../../Modals/ChatOptions/ChangeGroupNameModal';
 import { showModal } from '../../../reducers/actions';
 
-const GroupName = () => {
+const GroupName = ({ roomId, roomName }) => {
   const modalName = useSelector((state) => state.modalName);
   const dispatch = useDispatch();
 
@@ -25,7 +25,13 @@ const GroupName = () => {
           <FontAwesomeIcon icon={faPenNib} />
         </div>
       </div>
-      {modalName === 'group-name' && <ChangeGroupNameModal />}
+      {modalName === 'group-name' && (
+        <ChangeGroupNameModal
+          dispatch={dispatch}
+          roomId={roomId}
+          roomName={roomName}
+        />
+      )}
     </>
   );
 };

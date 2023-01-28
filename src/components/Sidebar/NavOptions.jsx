@@ -42,7 +42,6 @@ const renderControlAccount = (
 
   const handleSignOut = () => {
     signOut(auth);
-    console.log(auth);
   };
 
   return (

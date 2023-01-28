@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+
 import SPcontent from './SPcontent';
 
-const SharedPhotos = () => {
+const SharedPhotos = ({ onShowMediaModal, sharedPhotoData }) => {
   const [show, setShow] = useState(false);
+
   const handleClick = () => {
     setShow(!show);
   };
@@ -16,12 +18,15 @@ const SharedPhotos = () => {
         >
           Shared Images
         </div>
-        <div className="flex-center p-2 rounded-md cursor-pointer hover:bg-hoverLightMode dark:hover:bg-hover">
+        <div
+          onClick={onShowMediaModal}
+          className="flex-center p-2 rounded-md cursor-pointer hover:bg-hoverLightMode dark:hover:bg-hover"
+        >
           See all
         </div>
       </div>
 
-      <SPcontent show={show} />
+      <SPcontent data={sharedPhotoData} show={show} />
     </div>
   );
 };

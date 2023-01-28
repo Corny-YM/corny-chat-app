@@ -67,14 +67,20 @@ export const addNewMessage = (roomId, senderId, message) => {
   });
 };
 
-export const addNewMessageFileMedia = (roomId, senderId, url, fileName) => {
+export const addNewMessageFileMedia = (
+  roomId,
+  senderId,
+  url,
+  type,
+  fileName,
+) => {
   const ref = doc(db, 'messages', String(new Date().getTime()));
   return setDoc(ref, {
     roomId: roomId,
     senderId: senderId,
     chatContent: url,
     time: serverTimestamp(),
-    type: 'image',
+    type: type,
     fileName: fileName,
     reactions: [],
   });
@@ -101,5 +107,36 @@ export const updateLastTimeOnline = (roomId) => {
   const refRoom = doc(db, 'rooms', roomId);
   return updateDoc(refRoom, {
     lastTimeOnline: serverTimestamp(),
+  });
+};
+
+export const updateEmojiChat = (roomId, id, skin) => {
+  const refRoom = doc(db, 'rooms', roomId);
+  return updateDoc(refRoom, {
+    emoji: {
+      id: id,
+      skin: skin,
+    },
+  });
+};
+
+export const updateMembersGroup = (roomId, members) => {
+  const refRoom = doc(db, 'rooms', roomId);
+  return updateDoc(refRoom, {
+    members: members,
+  });
+};
+
+export const updateGroupAvatar = (roomId, url) => {
+  const refRoom = doc(db, 'rooms', roomId);
+  return updateDoc(refRoom, {
+    chatAvatar: url,
+  });
+};
+
+export const updateGroupName = (roomId, name) => {
+  const refRoom = doc(db, 'rooms', roomId);
+  return updateDoc(refRoom, {
+    roomName: name,
   });
 };

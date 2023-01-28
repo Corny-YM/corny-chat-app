@@ -1,9 +1,22 @@
 import React, { useState } from 'react';
+import { updateGroupName } from '../../../firebase/services';
+import { closeModal } from '../../../reducers/actions';
 
 import ModalsTemplate from '../ModalsTemplate';
 
-const ChangeGroupNameModal = () => {
-  const [valueInput, setValueInput] = useState('CORNY');
+const ChangeGroupNameModal = ({ dispatch, roomId, roomName }) => {
+  const [valueInput, setValueInput] = useState(roomName);
+
+  const handleChangeName = async () => {
+    await updateGroupName(roomId, valueInput);
+    dispatch(closeModal());
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.code == 'Enter') {
+      handleChangeName();
+    }
+  };
 
   return (
     <ModalsTemplate>
@@ -12,14 +25,21 @@ const ChangeGroupNameModal = () => {
           Change Group Name
         </div>
         <input
+          required
           value={valueInput}
           onChange={(e) => setValueInput(e.target.value)}
+          onKeyDown={handleKeyDown}
           type="text"
           className="input-styled-chat rounded-lg"
         />
 
         <div className="flex-center justify-end w-full mt-8">
-          <div className="w-full modal-btn bg-emerald-600">Save</div>
+          <div
+            onClick={handleChangeName}
+            className="w-full modal-btn bg-emerald-600"
+          >
+            Save
+          </div>
         </div>
       </div>
     </ModalsTemplate>

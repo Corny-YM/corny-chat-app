@@ -4,6 +4,7 @@ import {
   doc,
   documentId,
   onSnapshot,
+  orderBy,
   query,
   where,
 } from 'firebase/firestore';
@@ -13,7 +14,11 @@ const useListRoomsData = (roomId) => {
   const [roomInfo, setRoomInfo] = useState({});
   useEffect(() => {
     const roomsRef = collection(db, 'rooms');
-    const q = query(roomsRef, where(documentId(), '==', roomId));
+    const q = query(
+      roomsRef,
+      where(documentId(), '==', roomId),
+      // orderBy('lastTimeOnline'),
+    );
     const unsub = onSnapshot(q, (snapshot) => {
       snapshot.forEach((doc) => setRoomInfo(doc.data()));
     });

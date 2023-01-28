@@ -5,7 +5,7 @@ import { Collapse } from 'react-collapse';
 
 import { showModalImgShared } from '../../../reducers/actions';
 
-const SPcontent = ({ show }) => {
+const SPcontent = ({ data, show }) => {
   const dispatch = useDispatch();
 
   const handleClick = (src) => {
@@ -20,27 +20,27 @@ const SPcontent = ({ show }) => {
   return (
     <Collapse isOpened={show} checkTimeout={0}>
       <div className="flex justify-evenly flex-wrap m-2">
-        <div className="flex-center mb-2 px-2">
-          <img
-            onClick={() => handleClick('https://i.pravatar.cc/150?img=4')}
-            className="flex-center img-shared"
-            src="https://i.pravatar.cc/150?img=4"
-          />
-        </div>
-        <div className="flex-center mb-2 px-2">
-          <img
-            onClick={() => handleClick('https://i.pravatar.cc/150?img=5')}
-            className="flex-center img-shared"
-            src="https://i.pravatar.cc/150?img=5"
-          />
-        </div>
-        <div className="flex-center mb-2 px-2">
-          <img
-            onClick={() => handleClick('https://i.pravatar.cc/150?img=7')}
-            className="flex-center img-shared"
-            src="https://i.pravatar.cc/150?img=7"
-          />
-        </div>
+        {data.length > 0 ? (
+          data.map((value) => (
+            <div
+              key={value?.id}
+              className="flex-center w-20 h-20 mb-2 mx-2 overflow-hidden"
+            >
+              <img
+                onClick={() => handleClick(value?.chatContent)}
+                className="flex-center w-full h-full object-cover img-shared"
+                src={value?.chatContent}
+                alt={value?.fileName}
+              />
+            </div>
+          ))
+        ) : (
+          <div className="flex-center overflow-hidden">
+            <i className="font-bold text-red-700">
+              Don't have anything share yet!
+            </i>
+          </div>
+        )}
       </div>
     </Collapse>
   );

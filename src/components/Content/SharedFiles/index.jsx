@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import SFcontent from './SFcontent';
 
-const SharedFiles = () => {
+const SharedFiles = ({ onShowMediaModal, sharedFileData }) => {
   const [show, setShow] = useState(false);
   const handleClick = () => {
     setShow(!show);
@@ -17,12 +17,15 @@ const SharedFiles = () => {
         >
           Shared Files
         </div>
-        <div className="flex-center p-2 rounded-md cursor-pointer hover:bg-hoverLightMode dark:hover:bg-hover">
+        <div
+          onClick={onShowMediaModal}
+          className="flex-center p-2 rounded-md cursor-pointer hover:bg-hoverLightMode dark:hover:bg-hover"
+        >
           See all
         </div>
       </div>
 
-      <SFcontent show={show} />
+      <SFcontent data={sharedFileData} show={show} />
     </div>
   );
 };

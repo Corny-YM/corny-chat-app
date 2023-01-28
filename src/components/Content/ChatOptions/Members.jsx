@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MembersModal from '../../Modals/ChatOptions/MembersModal';
 import { showModal } from '../../../reducers/actions';
 
-const Members = () => {
+const Members = ({ roomId, members }) => {
   const modalName = useSelector((state) => state.modalName);
   const dispatch = useDispatch();
 
@@ -26,7 +26,9 @@ const Members = () => {
         </div>
       </div>
 
-      {modalName == 'members' && <MembersModal />}
+      {modalName == 'members' && (
+        <MembersModal dispatch={dispatch} roomId={roomId} members={members} />
+      )}
     </>
   );
 };

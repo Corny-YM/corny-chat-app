@@ -76,13 +76,13 @@ const ChatListItem = ({ roomId }) => {
       </div>
 
       {/* MORE */}
-      <div
+      {/* <div
         className="absolute right-2 hidden
             flex-center w-9 h-9 rounded-full cursor-pointer 
             dark:bg-messages group-hover:flex hover:bg-hoverLightMode dark:hover:bg-hover "
       >
         <FontAwesomeIcon className="flex-center" icon={faEllipsis} />
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -9,7 +9,7 @@ import Members from './Members';
 import Topic from './Topic';
 import Emoticon from './Emoticon';
 
-const ChatOptions = () => {
+const ChatOptions = ({ roomId, roomInfo }) => {
   const [show, setShow] = useState(false);
 
   return (
@@ -25,22 +25,26 @@ const ChatOptions = () => {
       <Collapse isOpened={show} checkTimeout={0}>
         <div className="flex flex-wrap m-2">
           {/* Emoticon */}
-          <Emoticon />
+          <Emoticon roomId={roomId} emoji={roomInfo?.emoji} />
 
           {/* Topic color */}
           <Topic />
 
           {/* Members */}
-          <Members />
+          {roomInfo?.chatType == 'group' && (
+            <Members roomId={roomId} members={roomInfo?.members} />
+          )}
 
           {/* AvatarGroup */}
-          <AvatarGroup />
+          {roomInfo?.chatType == 'group' && <AvatarGroup roomId={roomId} />}
 
           {/* GroupName */}
-          <GroupName />
+          {roomInfo?.chatType == 'group' && (
+            <GroupName roomId={roomId} roomName={roomInfo?.roomName} />
+          )}
 
           {/* LeaveGroup */}
-          <LeaveGroup />
+          {roomInfo?.chatType == 'group' && <LeaveGroup />}
         </div>
       </Collapse>
     </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SVcontent from './SVcontent';
 
-const SharedVideos = () => {
+const SharedVideos = ({ onShowMediaModal, sharedVidData }) => {
   const [show, setShow] = useState(false);
   const handleClick = () => {
     setShow(!show);
@@ -16,12 +16,15 @@ const SharedVideos = () => {
         >
           Shared Videos
         </div>
-        <div className="flex-center p-2 rounded-md cursor-pointer hover:bg-hoverLightMode dark:hover:bg-hover">
+        <div
+          onClick={onShowMediaModal}
+          className="flex-center p-2 rounded-md cursor-pointer hover:bg-hoverLightMode dark:hover:bg-hover"
+        >
           See all
         </div>
       </div>
 
-      <SVcontent show={show} />
+      <SVcontent data={sharedVidData} show={show} />
     </div>
   );
 };

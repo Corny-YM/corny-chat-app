@@ -18,12 +18,17 @@ const InputChat = ({ roomId, roomInfo }) => {
   const { currentUser } = useContext(AuthContext);
   const { isTexting } = useContext(InputChatContext);
 
-  const handleSendMessage = async (e) => {
-    const trimValInput = valueInput.trim();
+  const handleSendMessage = async (sendEmotion = '') => {
+    console.log(valueInput);
+    let trimValInput = valueInput.trim();
+    if (sendEmotion != '') {
+      trimValInput = sendEmotion;
+    }
     if (trimValInput == '') {
       setValueInput('');
       return;
     }
+    setValueInput('');
 
     // Create new message
     // roomId, currentUserUID, message
@@ -34,8 +39,6 @@ const InputChat = ({ roomId, roomInfo }) => {
 
     // Update last time online
     await updateLastTimeOnline(roomId);
-
-    setValueInput('');
   };
 
   return (
@@ -52,7 +55,7 @@ const InputChat = ({ roomId, roomInfo }) => {
       {/* Emotion */}
       <div className="flex-center mr-1">
         {!isTexting ? (
-          <Emotion emoji={roomInfo?.emoji} />
+          <Emotion onSendMessage={handleSendMessage} emoji={roomInfo?.emoji} />
         ) : (
           <SendMessage onSendMessage={handleSendMessage} />
         )}

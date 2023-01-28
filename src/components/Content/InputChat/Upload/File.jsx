@@ -1,36 +1,35 @@
 import React, { useContext } from 'react';
-
-import { faCirclePlay } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { AppContext } from '../../../../context/AppProvider';
+import { faFileCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
-const Vid = ({ handleUpload }) => {
+const File = ({ handleUpload }) => {
   const { topicTheme } = useContext(AppContext);
 
   return (
     <label
       className="flex-center w-7 h-7 p-4 rounded-full hover:bg-hoverLightMode dark:hover:bg-hover cursor-pointer"
-      htmlFor="fileVid"
+      htmlFor="file"
     >
       <input
         onChange={(e) =>
-          handleUpload(e.target.files[0], 'vids', 'video', 'Sent a video')
+          handleUpload(e.target.files[0], 'files', 'file', 'Sent a file')
         }
         type="file"
-        accept="video/*"
-        id="fileVid"
+        accept=".pdf, text/plain, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+        id="file"
         className="hidden"
       />
       <div className="flex-center">
         <FontAwesomeIcon
           style={{ color: topicTheme }}
-          className="text-xl "
-          icon={faCirclePlay}
+          className="text-[16px]"
+          icon={faFileCirclePlus}
         />
       </div>
     </label>
   );
 };
 
-export default Vid;
+export default File;

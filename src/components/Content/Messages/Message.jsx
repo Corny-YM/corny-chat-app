@@ -15,6 +15,7 @@ import { showModalImgShared } from '../../../reducers/actions';
 import { AuthContext } from '../../../context/AuthContext';
 
 import { formatDate } from '../../../constants/moment';
+import { faCloudArrowDown } from '@fortawesome/free-solid-svg-icons';
 
 const Message = ({ messageInfo, membersInfo, handleShowModalImg }) => {
   const { topicTheme } = useContext(AppContext);
@@ -81,9 +82,35 @@ const Message = ({ messageInfo, membersInfo, handleShowModalImg }) => {
             onClick={() => handleShowModalImg(chatContent)}
           />
         ) : type == 'video' ? (
-          <video className="message-vid" controls src={fileName} />
+          <video className="message-vid" controls src={chatContent} />
         ) : type == 'file' ? (
-          ''
+          <span
+            style={
+              senderId == currentUser.uid
+                ? {
+                    backgroundColor: topicTheme,
+                  }
+                : {}
+            }
+            className={`flex flex-col px-3 py-2 rounded-[18px] w-fit ${
+              senderId == currentUser.uid
+                ? 'owner'
+                : 'bg-inputLightMode dark:bg-messages'
+            }`}
+          >
+            <time className="text-xs dark:text-white text-dark">
+              {formatDate(time?.toDate())}
+            </time>
+            <a
+              className="flex-center underline"
+              href={chatContent}
+              target="_blank"
+            >
+              <FontAwesomeIcon icon={faCloudArrowDown} />
+              {fileName}
+              <FontAwesomeIcon icon={faCloudArrowDown} />
+            </a>
+          </span>
         ) : (
           ''
         )}

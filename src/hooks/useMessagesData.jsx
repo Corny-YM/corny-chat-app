@@ -5,6 +5,8 @@ import {
   limit,
   onSnapshot,
   where,
+  orderBy,
+  documentId,
 } from 'firebase/firestore';
 import { db } from '../firebase/config';
 
@@ -16,7 +18,7 @@ function useMessagesData(roomId, amount) {
     const q = query(
       messagesRef,
       where('roomId', '==', roomId),
-      //   orderBy(documentId(), 'desc'),
+      orderBy(documentId(), 'desc'),
       limit(amount),
     );
     onSnapshot(q, (snapshot) => {

@@ -47,7 +47,7 @@ const InfoChat = () => {
     <div
       className={`${
         !showChatDetails && 'hidden'
-      } flex-col fixed inset-0 md:absolute lg:relative lg:w-1/3 bg-lightMode dark:bg-darkMode p-2 flex`}
+      } flex-col fixed inset-0 md:absolute lg:relative lg:w-64 bg-lightMode dark:bg-darkMode p-2 flex`}
     >
       {/* header */}
       <div className="flex justify-between">
@@ -85,7 +85,7 @@ const InfoChat = () => {
         />
       </div>
 
-      {modalName == 'all-media' && <MediaModal />}
+      {modalName == 'all-media' && <MediaModal roomId={roomId} />}
     </div>
   );
 };

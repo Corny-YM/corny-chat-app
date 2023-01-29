@@ -1,5 +1,6 @@
 import {
   addDoc,
+  arrayRemove,
   arrayUnion,
   collection,
   doc,
@@ -140,3 +141,36 @@ export const updateGroupName = (roomId, name) => {
     roomName: name,
   });
 };
+
+export const updateAdmin = async (roomId, mem) => {
+  const ref = doc(db, 'rooms', roomId);
+  await updateDoc(ref, {
+    members: arrayRemove({ ...mem }),
+  });
+  await updateDoc(ref, {
+    members: arrayUnion({ ...mem, isAdmin: true }),
+  });
+};
+
+// DELETE
+export const deleteMessage = (messageId) => {
+  const refMessage = doc(db, 'messages', String(messageId));
+  return updateDoc(refMessage, {
+    chatContent: '',
+  });
+};
+
+// Remove a member out of group
+export const removeUserRoomId = (uid, roomId) => {
+  const refUser = doc(db, 'users', uid);
+  return updateDoc(refUser, {
+    rooms: arrayRemove(roomId),
+  });
+};
+export const removeMember = (roomId, member) => {
+  const refRoom = doc(db, 'rooms', roomId);
+  return updateDoc(refRoom, {
+    members: arrayRemove(member),
+  });
+};
+export const removeCurrentMember = () => {};

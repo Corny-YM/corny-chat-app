@@ -1,26 +1,22 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faCopy,
-  faFaceSmile,
-  faTrashCan,
-} from '@fortawesome/free-regular-svg-icons';
-
-import { AppContext } from '../../../context/AppProvider';
-import { showModalImgShared } from '../../../reducers/actions';
-import Img from '../../Modals/Shared/Img';
-import Message from './Message';
+import { showModal, showModalImgShared } from '../../../reducers/actions';
 import useMessagesData from '../../../hooks/useMessagesData';
 
+import Message from './Message';
+import Img from '../../Modals/Shared/Img';
+import RemoveMessageModal from '../../Modals/RemoveMessageModal';
+
 const Messages = ({ roomId, members }) => {
-  const { topicTheme } = useContext(AppContext);
+  const [deleteId, setDeleteId] = useState('');
+
   const { modalName, src } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   // roomId, amount = limit
-  const { messages } = useMessagesData(roomId, 50);
+  const { messages } = useMessagesData(roomId, 80);
+  messages.sort((a, b) => a.id - b.id);
 
   const handleShow = (src) => {
     dispatch(
@@ -29,6 +25,12 @@ const Messages = ({ roomId, members }) => {
         src: src,
       }),
     );
+  };
+
+  const handleShowModalDeleteMessage = (messageId) => {
+    // console.log(typeof messageId);
+    setDeleteId(messageId);
+    dispatch(showModal('delete-message'));
   };
 
   return (
@@ -41,11 +43,14 @@ const Messages = ({ roomId, members }) => {
             messageInfo={message}
             membersInfo={members}
             handleShowModalImg={handleShow}
+            handleShowModalDeleteMessage={handleShowModalDeleteMessage}
           />
         ))}
       </div>
       {modalName == 'img-shared' && <Img src={src} />}
-      {/* {modalName == 'delete-message' && <Img src={src} />} */}
+      {modalName == 'delete-message' && (
+        <RemoveMessageModal messageId={deleteId} />
+      )}
     </>
   );
 };

@@ -51,28 +51,32 @@ const SearchList = ({ isSearching, setUser, setUsername, users }) => {
         isAdmin: true,
       }); // res = docs
 
+      let isCreated = false;
       // created
       if (res.size) {
         // navigate to the <RoomId/> => show chat
         res.forEach((doc) => {
           doc.data().members.forEach((mem) => {
             if (mem.uid == currentUser.uid) {
+              isCreated = true;
               navigate('/' + doc.id);
             }
           });
         });
-      } else {
+      }
+
+      if (isCreated == false) {
         // create new for collection 'rooms'
-        const res = await createNewRoom(
+        const req = await createNewRoom(
           user.displayName,
           arrMembers,
           'friend',
           user.photoURL,
         );
 
-        // Update rooms for collection 'users'
+        // // Update rooms for collection 'users'
         arrMembers.forEach(async (member) => {
-          await updateUserRooms(member.uid, res.id);
+          await updateUserRooms(member.uid, req.id);
         });
       }
     } catch (err) {

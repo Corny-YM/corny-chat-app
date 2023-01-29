@@ -19,7 +19,6 @@ const InputChat = ({ roomId, roomInfo }) => {
   const { isTexting } = useContext(InputChatContext);
 
   const handleSendMessage = async (sendEmotion = '') => {
-    console.log(valueInput);
     let trimValInput = valueInput.trim();
     if (sendEmotion != '') {
       trimValInput = sendEmotion;

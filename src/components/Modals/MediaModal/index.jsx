@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
+import useSharedData from '../../../hooks/useSharedData';
 
 import ModalsTemplate from '../ModalsTemplate';
 import FileMedia from './FileMedia';
 import ImgMedia from './ImgMedia';
 import VidMedia from './VidMedia';
 
-const MediaModal = () => {
+const MediaModal = ({ roomId }) => {
   const [content, setContent] = useState('img');
+
+  const sharedPhoto = useSharedData(roomId, 'image', 30);
+  const sharedVid = useSharedData(roomId, 'video', 30);
+  const sharedFile = useSharedData(roomId, 'file', 30);
 
   return (
     <ModalsTemplate>
@@ -39,9 +44,9 @@ const MediaModal = () => {
         </div>
 
         {/* Type Media */}
-        {content == 'img' && <ImgMedia />}
-        {content == 'vid' && <VidMedia />}
-        {content == 'file' && <FileMedia />}
+        {content == 'img' && <ImgMedia data={sharedPhoto} />}
+        {content == 'vid' && <VidMedia data={sharedVid} />}
+        {content == 'file' && <FileMedia data={sharedFile} />}
       </div>
     </ModalsTemplate>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import ModalsTemplate from '../ModalsTemplate';
 import MembersList from './MembersList';
@@ -14,6 +14,11 @@ const MembersModal = ({ roomId, members }) => {
   const [notification, setNotification] = useState('');
   const [membersRole, setMembersRole] = useState(members);
   const [role, setRole] = useState('All');
+
+  useEffect(() => {
+    handleShowRole('All');
+    setMembersRole(members);
+  }, [members]);
 
   const handleAddMember = async () => {
     const userId = inputValueUserId.trim();

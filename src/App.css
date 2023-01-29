@@ -99,7 +99,7 @@
 }
 
 .overflow-overlay {
-  overflow: overlay;
+  overflow-y: overlay;
 }
 
 .img-shared,

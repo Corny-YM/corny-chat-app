@@ -4,15 +4,19 @@ import { useDispatch } from 'react-redux';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { closeModal } from '../../reducers/actions';
+import { closeModal, showModal } from '../../reducers/actions';
 import { AppContext } from '../../context/AppProvider';
 
-const ModalsTemplate = ({ children }) => {
+const ModalsTemplate = ({ showMedia = '', children }) => {
   const { topicTheme } = useContext(AppContext);
   const dispatch = useDispatch();
 
   const handleCloseModal = (e) => {
     e.stopPropagation();
+    if (showMedia == 'all-media') {
+      dispatch(showModal('all-media'));
+      return;
+    }
     dispatch(closeModal());
   };
 

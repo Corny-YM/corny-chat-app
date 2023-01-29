@@ -1,7 +1,4 @@
 import React, { useContext, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
-import moment from 'moment';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -9,15 +6,19 @@ import {
   faFaceSmile,
   faTrashCan,
 } from '@fortawesome/free-regular-svg-icons';
-
-import { AppContext } from '../../../context/AppProvider';
-import { showModalImgShared } from '../../../reducers/actions';
-import { AuthContext } from '../../../context/AuthContext';
-
-import { formatDate } from '../../../constants/moment';
 import { faCloudArrowDown } from '@fortawesome/free-solid-svg-icons';
 
-const Message = ({ messageInfo, membersInfo, handleShowModalImg }) => {
+import { AppContext } from '../../../context/AppProvider';
+import { AuthContext } from '../../../context/AuthContext';
+import { formatDate } from '../../../constants/moment';
+import NoAvatar from '../../../assets/imgs/NoAvatar.png';
+
+const Message = ({
+  messageInfo,
+  membersInfo,
+  handleShowModalImg,
+  handleShowModalDeleteMessage,
+}) => {
   const { topicTheme } = useContext(AppContext);
   const { roomId, senderId, chatContent, time, type, fileName, reactions } =
     messageInfo;
@@ -38,97 +39,125 @@ const Message = ({ messageInfo, membersInfo, handleShowModalImg }) => {
 
   return (
     <div
-      ref={refLastMessage}
-      className={`w-full flex mb-1 sm:px-3 gap-2 group ${
+      className={`w-full flex-1 flex-center ${
         senderId == currentUser.uid ? 'owner' : ''
       }`}
     >
-      {senderId !== currentUser.uid && (
-        <img
-          className="w-8 h-8 rounded-full object-cover"
-          src={sender(senderId)?.photoURL}
-        />
-      )}
       <div
-        className={`flex items-center overflow-hidden max-w-[60%] md:max-w-[75%] ${
+        ref={refLastMessage}
+        className={`w-full flex mb-1 sm:px-3 gap-2 group ${
           senderId == currentUser.uid ? 'owner' : ''
         }`}
       >
-        {/* bg userChat bg-messages */}
-        {type == 'message' ? (
-          <span
-            style={
-              senderId == currentUser.uid
-                ? {
-                    backgroundColor: topicTheme,
-                  }
-                : {}
-            }
-            className={`flex flex-col px-3 py-2 rounded-[18px] w-fit ${
-              senderId == currentUser.uid
-                ? 'owner'
-                : 'bg-inputLightMode dark:bg-messages'
-            }`}
-          >
-            <time className="text-xs dark:text-white text-dark">
-              {formatDate(time?.toDate())}
-            </time>
-            {chatContent}
-          </span>
-        ) : type == 'image' ? (
+        {/* Img Sender User */}
+        {senderId !== currentUser.uid && (
           <img
-            className="rounded-xl max-w-[50%] message-img"
-            src={chatContent}
-            onClick={() => handleShowModalImg(chatContent)}
+            className="w-8 h-8 rounded-full object-cover"
+            src={sender(senderId)?.photoURL || NoAvatar}
           />
-        ) : type == 'video' ? (
-          <video className="message-vid" controls src={chatContent} />
-        ) : type == 'file' ? (
-          <span
-            style={
-              senderId == currentUser.uid
-                ? {
-                    backgroundColor: topicTheme,
-                  }
-                : {}
-            }
-            className={`flex flex-col px-3 py-2 rounded-[18px] w-fit ${
-              senderId == currentUser.uid
-                ? 'owner'
-                : 'bg-inputLightMode dark:bg-messages'
-            }`}
-          >
-            <time className="text-xs dark:text-white text-dark">
-              {formatDate(time?.toDate())}
-            </time>
-            <a
-              className="flex-center underline"
-              href={chatContent}
-              target="_blank"
-            >
-              <FontAwesomeIcon icon={faCloudArrowDown} />
-              {fileName}
-              <FontAwesomeIcon icon={faCloudArrowDown} />
-            </a>
-          </span>
-        ) : (
-          ''
         )}
-        <div className="flex-center ml-3 opacity-0 group-hover:opacity-100 transition-smooth">
-          <div className="flex-center w-7 h-7 cursor-pointer rounded-full hover:bg-hoverLightMode dark:hover:bg-hover">
-            <FontAwesomeIcon icon={faFaceSmile} />
-          </div>
-          <div
-            onClick={() => {
-              navigator.clipboard.writeText(chatContent || '');
-            }}
-            className="flex-center w-7 h-7 cursor-pointer rounded-full hover:bg-hoverLightMode dark:hover:bg-hover"
-          >
-            <FontAwesomeIcon icon={faCopy} />
-          </div>
-          <div className="flex-center w-7 h-7 cursor-pointer rounded-full hover:bg-hoverLightMode dark:hover:bg-hover">
-            <FontAwesomeIcon icon={faTrashCan} />
-          </div>
+
+        {/* Message Content */}
+        <div
+          className={`flex flex-1 max-w-[60%] md:max-w-[75%] items-center overflow-hidden w-full ${
+            senderId == currentUser.uid ? 'owner' : ''
+          }`}
+        >
+          {/* bg userChat bg-messages */}
+          {type == 'message' && chatContent != '' ? (
+            <p
+              style={
+                senderId == currentUser.uid
+                  ? {
+                      backgroundColor: topicTheme,
+                    }
+                  : {}
+              }
+              className={`flex flex-col px-3 py-2 rounded-[18px] break-all ${
+                senderId == currentUser.uid
+                  ? 'owner'
+                  : 'bg-inputLightMode dark:bg-messages'
+              }`}
+            >
+              <time className="text-xs dark:text-white text-dark">
+                {formatDate(time?.toDate())}
+              </time>
+              {chatContent}
+            </p>
+          ) : type == 'image' && chatContent != '' ? (
+            <img
+              className="rounded-xl max-w-[50%] message-img"
+              src={chatContent}
+              onClick={() => handleShowModalImg(chatContent)}
+            />
+          ) : type == 'video' && chatContent != '' ? (
+            <video className="message-vid" controls src={chatContent} />
+          ) : type == 'file' && chatContent != '' ? (
+            <p
+              style={
+                senderId == currentUser.uid
+                  ? {
+                      backgroundColor: topicTheme,
+                    }
+                  : {}
+              }
+              className={`flex flex-col px-3 py-2 rounded-[18px] break-all ${
+                senderId == currentUser.uid
+                  ? 'owner'
+                  : 'bg-inputLightMode dark:bg-messages'
+              }`}
+            >
+              <time className="text-xs dark:text-white text-dark">
+                {formatDate(time?.toDate())}
+              </time>
+              <a
+                className="flex-center underline"
+                href={chatContent}
+                target="_blank"
+              >
+                <span>
+                  {fileName}
+                  <FontAwesomeIcon className="ml-2" icon={faCloudArrowDown} />
+                </span>
+              </a>
+            </p>
+          ) : (
+            chatContent == '' && (
+              <span className=" select-none dark:text-gray-400 text-gray-600 rounded-xl border border-gray-600 px-4 py-2">
+                Revoked Message
+              </span>
+            )
+          )}
+
+          {/* Options */}
+          {chatContent != '' && (
+            <div className="flex-center mx-3 opacity-0 group-hover:opacity-100 transition-smooth">
+              {/* Reactions */}
+              <div className="flex-center w-7 h-7 cursor-pointer rounded-full hover:bg-hoverLightMode dark:hover:bg-hover">
+                <FontAwesomeIcon icon={faFaceSmile} />
+              </div>
+
+              {/* Copy message */}
+              <div
+                onClick={() => {
+                  navigator.clipboard.writeText(chatContent || '');
+                }}
+                className="flex-center w-7 h-7 cursor-pointer rounded-full hover:bg-hoverLightMode dark:hover:bg-hover"
+              >
+                <FontAwesomeIcon icon={faCopy} />
+              </div>
+
+              {/* Delete message */}
+              {currentUser.uid == senderId && (
+                <div
+                  onClick={() => handleShowModalDeleteMessage(messageInfo?.id)}
+                  className="flex-center w-7 h-7 cursor-pointer rounded-full hover:bg-hoverLightMode dark:hover:bg-hover"
+                >
+                  <FontAwesomeIcon icon={faTrashCan} />
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

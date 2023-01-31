@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 
 import { faChevronLeft, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,9 +7,8 @@ import { AppContext } from '../../../context/AppProvider';
 import { InfoChatContext } from '../../../context/InfoChatProvider';
 import { AuthContext } from '../../../context/AuthContext';
 
-import useListRoomsData from '../../../hooks/useListRoomsData';
-
 import NoGroupImg from '../../../assets/imgs/NoGroupImg.jpg';
+import { useNavigate } from 'react-router-dom';
 
 const UserInfoChat = ({ roomInfo }) => {
   const [friend, setFriend] = useState({});
@@ -19,7 +17,21 @@ const UserInfoChat = ({ roomInfo }) => {
     useContext(AppContext);
   const { showChatDetails, setShowChatDetails } = useContext(InfoChatContext);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
+    if (roomInfo?.members?.length >= 0) {
+      let check = false;
+      roomInfo.members.forEach((member) => {
+        if (member.uid == currentUser.uid) {
+          check = true;
+        }
+      });
+      if (!check) {
+        navigate('/');
+      }
+    }
+
     if (roomInfo.chatType === 'friend') {
       const index = roomInfo.members.findIndex(
         (mem) => mem.uid != currentUser.uid,

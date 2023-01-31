@@ -173,4 +173,9 @@ export const removeMember = (roomId, member) => {
     members: arrayRemove(member),
   });
 };
-export const removeCurrentMember = () => {};
+export const removeCurrentMember = (roomId, currentUserInfo) => {
+  const refRoom = doc(db, 'rooms', roomId);
+  return updateDoc(refRoom, {
+    members: arrayRemove(currentUserInfo),
+  });
+};

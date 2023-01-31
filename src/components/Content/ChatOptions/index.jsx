@@ -44,7 +44,9 @@ const ChatOptions = ({ roomId, roomInfo }) => {
           )}
 
           {/* LeaveGroup */}
-          {roomInfo?.chatType == 'group' && <LeaveGroup />}
+          {roomInfo?.chatType == 'group' && (
+            <LeaveGroup roomId={roomId} members={roomInfo?.members} />
+          )}
         </div>
       </Collapse>
     </div>

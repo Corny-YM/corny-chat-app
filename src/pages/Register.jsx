@@ -9,8 +9,6 @@ import { auth, db, storage } from '../firebase/config';
 import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { faImage } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { doc, setDoc } from 'firebase/firestore';
 import { createNewUser } from '../firebase/services';
 
 const Register = () => {
@@ -25,6 +23,10 @@ const Register = () => {
     const file = e.target[3].files[0];
 
     try {
+      if (!file) {
+        setError(true);
+        return;
+      }
       const res = await createUserWithEmailAndPassword(auth, email, password);
       const storageRef = ref(storage, `/avatar/${file.name}`);
       const uploadTask = uploadBytesResumable(storageRef, file);
@@ -103,9 +105,7 @@ const Register = () => {
           </label>
           <button className="w-full button-styled">Sign in</button>
         </form>
-        {error && (
-          <div className="font-bold text-xl">Something went wrong!</div>
-        )}
+        {error && <i className="font-bold text-xl">Choose an image!</i>}
         <p>
           You do have an account?{' '}
           <Link to="/login" className="font-bold text-bg-messages">

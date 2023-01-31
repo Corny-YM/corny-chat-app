@@ -13,7 +13,7 @@ const ChatList = () => {
   const { listRoomsId, userDocId } = useListRoomsId(currentUser?.uid ?? '');
 
   return (
-    <div className="flex flex-col flex-1 mt-3 overflow-y-scroll">
+    <div className="h-full flex flex-col flex-1 mt-3 overflow-y-scroll">
       {/* item */}
       {listRoomsId.map((roomId) => (
         <ChatListItem key={roomId} roomId={roomId} />

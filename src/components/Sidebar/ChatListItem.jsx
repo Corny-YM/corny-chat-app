@@ -64,7 +64,7 @@ const ChatListItem = ({ roomId }) => {
             {friend?.displayName || roomInfo?.roomName}
           </p>
           <span className="sm:max-w-[200px] text-ellipsis text-[14px] opacity-70">
-            {lastSentUserName}:{' '}
+            {lastSentUserName || <i>Ruined</i>}:{' '}
             {roomInfo?.lastMessage?.content || 'Start chatting...'}
           </span>
         </div>

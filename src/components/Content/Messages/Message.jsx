@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -12,6 +12,29 @@ import { AppContext } from '../../../context/AppProvider';
 import { AuthContext } from '../../../context/AuthContext';
 import { formatDate } from '../../../constants/moment';
 import NoAvatar from '../../../assets/imgs/NoAvatar.png';
+import Tippy from '@tippyjs/react';
+
+import { fbIcons } from '../../../constants/fbIcons';
+
+const handelShowIconsFB = (showIconsFB) => {
+  return (
+    showIconsFB && (
+      <div className="flex-center gap-1 p-1 rounded-lg shadow shadow-gray-500 bg-lightMode dark:bg-dark">
+        {fbIcons.map((icon) => (
+          <div
+            key={icon.id}
+            className="h-10 w-10 p-1 flex-center rounded-lg overflow-hidden cursor-pointer hover:bg-hoverLightMode dark:hover:bg-home-search"
+          >
+            <img
+              className="w-full h-full object-cover flex-center"
+              src={icon.src}
+            />
+          </div>
+        ))}
+      </div>
+    )
+  );
+};
 
 const Message = ({
   messageInfo,
@@ -19,6 +42,8 @@ const Message = ({
   handleShowModalImg,
   handleShowModalDeleteMessage,
 }) => {
+  const [showIconsFB, setShowIconsFB] = useState(false);
+
   const { topicTheme } = useContext(AppContext);
   const { roomId, senderId, chatContent, time, type, fileName, reactions } =
     messageInfo;
@@ -39,7 +64,7 @@ const Message = ({
 
   return (
     <div
-      className={`w-full flex-1 flex-center ${
+      className={`w-full flex-center ${
         senderId == currentUser.uid ? 'owner' : ''
       }`}
     >
@@ -131,10 +156,27 @@ const Message = ({
 
           {/* Options */}
           {chatContent != '' && (
-            <div className="flex-center mx-3 opacity-0 group-hover:opacity-100 transition-smooth">
+            <div
+              className={`flex-center mx-3 opacity-0 ${
+                showIconsFB ? 'opacity-100' : 'group-hover:opacity-100'
+              } transition-smooth`}
+            >
               {/* Reactions */}
-              <div className="flex-center w-7 h-7 cursor-pointer rounded-full hover:bg-hoverLightMode dark:hover:bg-hover">
-                <FontAwesomeIcon icon={faFaceSmile} />
+              <div>
+                <Tippy
+                  render={() => handelShowIconsFB(showIconsFB)}
+                  interactive
+                  visible={showIconsFB}
+                  placement="top"
+                  onClickOutside={() => setShowIconsFB(false)}
+                >
+                  <div
+                    onClick={() => setShowIconsFB(!showIconsFB)}
+                    className="flex-center w-7 h-7 cursor-pointer rounded-full hover:bg-hoverLightMode dark:hover:bg-hover"
+                  >
+                    <FontAwesomeIcon icon={faFaceSmile} />
+                  </div>
+                </Tippy>
               </div>
 
               {/* Copy message */}

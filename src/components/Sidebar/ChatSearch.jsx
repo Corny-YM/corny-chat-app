@@ -51,7 +51,7 @@ const ChatSearch = ({ isSearching }) => {
         setUser={setUser}
         onKeyDown={handleKeyDown}
       />
-      <div className="relative flex flex-col flex-1 w-full">
+      <div className="relative flex flex-col flex-1 w-full overflow-overlay">
         <ChatList />
         <SearchList
           isSearching={isSearching}

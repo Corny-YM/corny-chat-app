@@ -1,16 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 // firebase
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase/config';
+import {
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from 'firebase/auth';
+import { auth, googleProvider, facebookProvider } from '../firebase/config';
 
 import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { createNewUser, getUser } from '../firebase/services';
+
+// console.log(googleProvider, facebookProvider);
 
 const Login = () => {
   const [err, setErr] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigate('/');
+      } else {
+        navigate('/login');
+      }
+    });
+
+    return () => {
+      unsub();
+    };
+  }, []);
 
   const handleSubmitEmailAndPassword = async (e) => {
     e.preventDefault();
@@ -22,6 +43,33 @@ const Login = () => {
       navigate('/');
     } catch (err) {
       setErr(true);
+    }
+  };
+
+  const checkUser = async (user) => {
+    try {
+      const result = await getUser(user.uid);
+      if (result.size === 0) {
+        // displayName, email, photoURL, uid
+        await createNewUser(
+          user.displayName,
+          user.email,
+          user.photoURL,
+          user.uid,
+        );
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleLogin = async (provider) => {
+    try {
+      const { user } = await signInWithPopup(auth, provider);
+      await checkUser(user);
+      navigate('/');
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -49,13 +97,17 @@ const Login = () => {
             type="password"
             placeholder="Password"
           />
-          <button type="submit" className="w-full button-styled sm:mt-8 mt-4">
+          {err && (
+            <i className="font-bold text-xl my-2">Something went wrong!</i>
+          )}
+          <button type="submit" className="w-full button-styled">
             Log in
           </button>
         </form>
         <p>--------------- or Login with ---------------</p>
         <div className="w-full flex-center justify-around">
           <div
+            onClick={() => handleLogin(facebookProvider)}
             className="flex-center gap-2 cursor-pointer 
             rounded-md hover:bg-dark/30 p-2"
           >
@@ -63,6 +115,7 @@ const Login = () => {
             <span className="text-[16px]">Facebook</span>
           </div>
           <div
+            onClick={() => handleLogin(googleProvider)}
             className="flex-center gap-2 cursor-pointer 
             rounded-md hover:bg-dark/30 p-2"
           >

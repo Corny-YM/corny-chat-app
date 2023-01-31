@@ -1,15 +1,27 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 import { showModal } from '../../../reducers/actions';
+import { AuthContext } from '../../../context/AuthContext';
 import LeaveGroupModal from '../../Modals/ChatOptions/LeaveGroupModal';
 
-const LeaveGroup = () => {
+const LeaveGroup = ({ roomId, members }) => {
+  const [isCurrentUserAdmin, setIsCurrentUserAdmin] = useState(false);
+  const { currentUser } = useContext(AuthContext);
+
   const modalName = useSelector((state) => state.modalName);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    members.forEach((member) => {
+      if (member?.uid == currentUser.uid && member?.isAdmin) {
+        setIsCurrentUserAdmin(true);
+      }
+    });
+  }, [members]);
 
   const handleClick = () => {
     dispatch(showModal('leave-group'));
@@ -28,7 +40,12 @@ const LeaveGroup = () => {
           />
         </div>
       </div>
-      {modalName === 'leave-group' && <LeaveGroupModal />}
+      {modalName === 'leave-group' && (
+        <LeaveGroupModal
+          roomId={roomId}
+          isCurrentUserAdmin={isCurrentUserAdmin}
+        />
+      )}
     </>
   );
 };

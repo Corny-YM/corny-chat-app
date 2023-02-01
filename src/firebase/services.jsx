@@ -152,6 +152,37 @@ export const updateAdmin = async (roomId, mem) => {
   });
 };
 
+// =====================REACTIONS=====================
+export const addUserReaction = async (
+  messageId,
+  userId,
+  iconId,
+  prevIconId,
+) => {
+  const refMessage = doc(db, 'messages', messageId);
+  await updateDoc(refMessage, {
+    reactions: arrayRemove({
+      userId: userId,
+      iconId: prevIconId,
+    }),
+  });
+  await updateDoc(refMessage, {
+    reactions: arrayUnion({
+      userId: userId,
+      iconId: iconId,
+    }),
+  });
+};
+export const removeUserReaction = async (messageId, userId, iconId) => {
+  const refMessage = doc(db, 'messages', messageId);
+  await updateDoc(refMessage, {
+    reactions: arrayRemove({
+      userId: userId,
+      iconId: iconId,
+    }),
+  });
+};
+
 // DELETE
 export const deleteMessage = (messageId) => {
   const refMessage = doc(db, 'messages', String(messageId));

@@ -21,13 +21,17 @@ function useMessagesData(roomId, amount) {
       orderBy(documentId(), 'desc'),
       limit(amount),
     );
-    onSnapshot(q, (snapshot) => {
+    const unsub = onSnapshot(q, (snapshot) => {
       const listMessages = [];
       snapshot.forEach((doc) => {
         listMessages.push({ ...doc.data(), id: doc.id });
       });
       setMessages(listMessages);
     });
+
+    return () => {
+      unsub();
+    };
   }, [roomId]);
 
   return { messages };

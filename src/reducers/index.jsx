@@ -1,6 +1,6 @@
 import { createStore } from '@reduxjs/toolkit';
 
-import modalsReducer from './Modals';
+import modalsReducer from './modals';
 
 const store = createStore(modalsReducer);
 
